@@ -9,7 +9,7 @@ shadow-tracker 是一款轻量级的前端无感知监控插件，它提供的�
 | 1    | 收集用户与网页交互时的点击、键盘输入事件                                             | 事件日志（Event Log）          |
 | 2    | 收集所有 JS 的错误信息                                                               | 错误日志（Error Log）          |
 | 3    | 收集所有 XMLHTTPRequest 网络请求信息                                                 | 请求日志（XMLHttpRequest Log） |
-| 5    | 收集页面加载的性能数据信息                                                           | 性能日志（Performance Log）。  |
+| 5    | 收集页面加载的性能数据信息                                                           | 性能日志（Performance Log）  |
 | 6    | 收集用户的设备信息                                                                   | 设备日志（Device Log）         |
 | 7    | 提供时间旅行功能，可根据用户的操作生成 NightWatch e2e 测试代码，复现用户的每一步操作 | 无                             |
 | 8    | 支持对日志的自定义拓展                                                               | 无                             |
