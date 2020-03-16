@@ -37,7 +37,7 @@ console.log(tracker.getLogList()) // 获取日志信息
 ### 2-2、通过`<script>`标签引入
 
 ```html
-<script src="./shadow-tracker-script.js"></script>
+<script src="http://www.shadowingszy.top/ShadowTracker/script/shadow-tracker-script.js"></script>
 <script>
   // 引入之后tracker对象就会挂到window对象下，使用window.tracker即可访问tracker的API
   // 这里只呈现了“初始化tracker”以及“获取日志信息”的代码，其他API使用请参照第三部分“API说明”
@@ -46,6 +46,7 @@ console.log(tracker.getLogList()) // 获取日志信息
   console.log(window.tracker.getLogList()) // 获取日志信息
 </script>
 ```
+注：由于服务器资源有限，建议先从`"http://www.shadowingszy.top/ShadowTracker/script/shadow-tracker-script.js"`这里下载shadow-tracker脚本文件。
 
 ## 3、API 说明
 

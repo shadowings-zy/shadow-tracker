@@ -41,6 +41,8 @@ Console.Log(tracker.Getloglist()) // get log information
 </script>
 ```
 
+Note: due to the limited server resources, it is recommended to download the shadow-tracker script file from `"http://www.shadowtracker.top/shadowtracker/script/shadow-tracker-script.js"`.
+
 ## 3 API description
 
 ### 3-1 init(options)
