@@ -1,0 +1,12 @@
+/shadow-tracker
+/test
+/node_modules
+
+webpack.cdn.config.js
+webpack.npm.config.js
+.eslintrc.js
+.eslintignore
+.babelrc
+package.json
+package-lock.json
+.gitignore
