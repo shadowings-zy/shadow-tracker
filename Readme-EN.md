@@ -1,4 +1,4 @@
-# shadow-tracker
+# shadow-tracker(English)
 
 ## 1 shadow-tracker introduction
 
@@ -9,10 +9,10 @@ shadow-tracker is a sensorless front-end data tracker, which provides the follow
 | 1      | Collect the click and keyboard input events when the user interacts with the web page         | Event Log          |
 | 2      | Collect error information for all JS                                                          | Error Log          |
 | 3      | Collect all XMLHttpRequest network request information                                        | XMLHttpRequest Log |
-| 5      | Collect performance data information of page loading                                          | performance log    |
-| 6      | Collect the user's device information                                                         | device log         |
-| 7      | provide time travel function, generate nightwatch E2E test code according to user's operation | N/A                |
-| 8      | support custom expansion of logs                                                              | N/A                |
+| 4      | Collect performance data information of page loading                                          | performance log    |
+| 5      | Collect the user's device information                                                         | device log         |
+| 6      | provide time travel function, generate nightwatch E2E test code according to user's operation | N/A                |
+| 7      | support custom expansion of logs                                                              | N/A                |
 
 Note: `performance data information of page loading` supports IE9 and above browsers, and other functions support IE7 and above browsers.
 
