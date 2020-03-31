@@ -366,10 +366,9 @@ function test(browser) {
 }
 ```
 
-
 # shadow-tracker(English)
 
-## 1 shadow-tracker introduction
+## 1. shadow-tracker introduction
 
 shadow-tracker is a sensorless front-end data tracker, which provides the following functions:
 
@@ -385,9 +384,9 @@ shadow-tracker is a sensorless front-end data tracker, which provides the follow
 
 Note: `performance data information of page loading` supports IE9 and above browsers, and other functions support IE7 and above browsers.
 
-## 2 quick start
+## 2. quick start
 
-### 2-1 import through NPM
+### 2-1. import through NPM
 
 ```bash
 npm install shadow-tracker
@@ -400,7 +399,7 @@ Tracker.Init() // initialize tracker
 Console.Log(tracker.Getloglist()) // get log information
 ```
 
-### 2-2 import through the "script" tag
+### 2-2. import through the "script" tag
 
 ```html
 <script src="./shadow-tracker-script.js"></script>
@@ -412,9 +411,9 @@ Console.Log(tracker.Getloglist()) // get log information
 
 Note: due to the limited server resources, it is recommended to download the shadow-tracker script file from `"http://www.shadowtracker.top/shadowtracker/script/shadow-tracker-script.js"`.
 
-## 3 API description
+## 3. API description
 
-### 3-1 init(options)
+### 3-1. init(options)
 
 Initialize tracker
 
@@ -427,7 +426,7 @@ Use example:
 tracker.init({})
 ```
 
-### 3-2 getDeviceInfo()
+### 3-2. getDeviceInfo()
 
 Get user's device information and write the device information into the loglist. For details, see part 5 "loglist description and custom log"
 
@@ -437,7 +436,7 @@ Use example:
 console.log(tracker.getDeviceInfo())
 ```
 
-### 3-3 getPerformanceInfo()
+### 3-3. getPerformanceInfo()
 
 Get the page performance data and write the page performance information into the loglist. For details, see part 5 "loglist description and custom log"
 
@@ -447,7 +446,7 @@ Use example:
 console.log(tracker.getPerformanceInfo())
 ```
 
-### 3-4 getLogList()
+### 3-4. getLogList()
 
 Get all log data. For details, see part 5 "loglist description and custom log"
 
@@ -457,7 +456,7 @@ Use example:
 console.log(tracker.getLogList())
 ```
 
-### 3-5 getTimeTravelCode()
+### 3-5. getTimeTravelCode()
 
 Get the time travel code. For details, see part 6 "time travel"
 
@@ -467,7 +466,7 @@ Use example:
 console.log(tracker.getTimeTravelCode())
 ```
 
-## 4 Options
+## 4. Options
 
 When initialize tracker, a configuration object can be passed in to enrich the functionality of the tracker.
 
@@ -489,16 +488,16 @@ const option = {
 }
 ```
 
-## 5 Loglist description and custom log
+## 5. Loglist description and custom log
 
 Loglist is a JS array for storing all logs. We can use `getloglist()` to get this array, and further develop the logic of log reporting and log storage according to our business needs.
 In addition, we can expand the log object according to our own business requirements.
 
 If we need to add custom data, first we need to assign the `custom` attribute in the configuration item object passed in to the tracker to true, and implement the custom data function according to our own needs.
 
-### 5-1 Log object description
+### 5-1. Log object description
 
-#### 5-1-1 Basic description
+#### 5-1-1. Basic description
 
 The log object is the basic log object, which contains the following properties:
 
@@ -511,7 +510,7 @@ The log object is the basic log object, which contains the following properties:
 }
 ```
 
-#### 5-1-2 Custom description
+#### 5-1-2. Custom description
 
 The custom log object contains the following properties:
 
@@ -536,9 +535,9 @@ By implementing the 'customizelog' method in the configuration item, we can cust
 |logType | string | the type of log, including:`event log | error log | XMLHttpRequest log | device log | performance log`
 |logContent | object | log specific information|
 
-### 5-2 Description of event log object
+### 5-2. Description of event log object
 
-#### 5-2-1 Basic description
+#### 5-2-1. Basic description
 
 The event log object is a log object that records user clicks and enters events. It will be displayed in the `logContent` property of the corresponding type of log object.
 Event log includes two types of log: "click" and "input", respectively including the following attributes:
@@ -565,7 +564,7 @@ Enter event:
 }
 ```
 
-#### 5-2-2 Custom description
+#### 5-2-2. Custom description
 
 By implementing the `customizeEventLog()` method in the configuration item, we can customize the log object and use the return value of the `customizeEventLog()` function as the value of the `custom.detail` attribute in the log object.
 
@@ -574,9 +573,9 @@ By implementing the `customizeEventLog()` method in the configuration item, we c
 | - | - | - |
 |event | object | the event object that currently triggers the event
 
-### 5-3 Error log object description
+### 5-3. Error log object description
 
-#### 5-3-1 Basic description
+#### 5-3-1. Basic description
 
 Error log object is a log object that records JS errors on the current page. It will be displayed in the `logContent` property of the corresponding type of log object.
 The error log object contains the following properties:
@@ -598,7 +597,7 @@ Note: errorType details
 |window.onerror | `window.onerror` callback error|
 |window.onunhandledrejection | `window.onunhandledrejection` callback reports an error|
 
-#### 5-3-2 customize description
+#### 5-3-2. customize description
 
 By implementing the `customizeErrorLog()` method in the configuration item, we can customize the log object and use the return value of the `customizeErrorLog()` function as the value of the `custom.detail` attribute in the log object.
 
@@ -607,9 +606,9 @@ By implementing the `customizeErrorLog()` method in the configuration item, we c
 | - | - | - |
 |error | object | the error object that triggered the error
 
-### 5-4 XMLHttpRequest log object description
+### 5-4. XMLHttpRequest log object description
 
-#### 5-4-1 Basic description
+#### 5-4-1. Basic description
 
 XMLHttpRequest log object is a log object that records XMLHttpRequest. It will be displayed in the `logContent` attribute of the corresponding type of log object.
 XMLHttpRequest log contains two types of log: "request start" and "request end", respectively including the following attributes:
@@ -632,7 +631,7 @@ Request end:
 }
 ```
 
-#### 5-4-2 customize description
+#### 5-4-2. customize description
 
 By implementing the `customizeXMLHttpRequestlog()` method in the configuration item, we can customize the log object and use the return value of the `customizeXMLHttpRequestlog()` function as the value of the `custom.detail` attribute in the log object.
 
@@ -641,9 +640,9 @@ By implementing the `customizeXMLHttpRequestlog()` method in the configuration i
 | - | - | - |
 |event | object | event triggering 'ajaxloadstart' or 'ajaxloadend'
 
-### 5-5 Device log object description
+### 5-5. Device log object description
 
-#### 5-5-1 Basic description
+#### 5-5-1. Basic description
 
 The device log object is a log object that records user device information. It will be displayed in the `logContent` property of the corresponding type of log object, including the following properties:
 
@@ -658,7 +657,7 @@ The device log object is a log object that records user device information. It w
 }
 ```
 
-#### 5-5-2 customize description
+#### 5-5-2. customize description
 
 By implementing the `customizeDeviceLog()` method in the configuration item, we can customize the log object and take the return value of the `customizeDeviceLog()` function as the value of the `custom.detail` attribute in the log object.
 
@@ -667,9 +666,9 @@ By implementing the `customizeDeviceLog()` method in the configuration item, we 
 | - | - | - |
 |device | object | `navigator.useragent` object
 
-### 5-6 Description of performance log object
+### 5-6. Description of performance log object
 
-#### 5-6-1 Basic instructions
+#### 5-6-1. Basic instructions
 
 The performance log object is a log object that records page performance data. It will be displayed in the `logContent` property of the corresponding type of log object, including the following properties:
 
@@ -691,7 +690,7 @@ The performance log object is a log object that records page performance data. I
 
 Note: the performance log object uses `window.performance` to record page performance data, so only IE9 and above browsers are supported
 
-#### 5-6-2 User defined description
+#### 5-6-2. User defined description
 
 By implementing the `customizePerformanceLog()` method in the configuration item, we can customize the log object and take the return value of the `customizePerformanceLog()` function as the value of the `custom.detail` attribute in the log object.
 
@@ -700,7 +699,7 @@ By implementing the `customizePerformanceLog()` method in the configuration item
 | - | - | - |
 |performance | object | `window.performance` object
 
-## 6 Time Travel feature
+## 6. Time Travel feature
 
 This feature reproduces all user actions based on Event Log data in the logList and generates NightWatch E2E test code from the logs. We only need to install NightWatch and execute this code to reproduce user actions.
 
