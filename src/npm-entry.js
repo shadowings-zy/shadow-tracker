@@ -1,5 +1,5 @@
-import Tracker from './core/tracker'
+import Tracker from './core/tracker';
 
-const tracker = new Tracker()
+const tracker = new Tracker();
 
-export default tracker
+export default tracker;

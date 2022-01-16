@@ -111,6 +111,7 @@ console.log(tracker.getTimeTravelCode())
 ```javascript
 // 这是shadow-tracker的默认配置项，我们以此为例
 const option = {
+  sessionId: `${Date.now()}${Math.floor(Math.random() * 1000)}`, // sessionId，默认为当前时间+一个随机数
   useClass: false, // 是否使用class作为元素的唯一ID
   maxResponseTextLength: 1000, // 记录XMLHttpRequest返回值的最大长度
   timeTracelInitTime: 3000, // 生成的时间旅行代码中，初始化页面的等待时间
@@ -146,6 +147,7 @@ Log 对象是基础的日志对象，它包含如下属性：
 {
   "logTime": 1584262658187, // 日志产生的时间
   "url": "www.shadowingszy.top", // 产生日志页面的url
+  "logSession": "xxx", // sessionId
   "logType": "Error Log", // 日志的种类，包含：Event Log | Error Log | XMLHttPRequest Log | Device Log | Performance Log 五种
   "logContent": {} // 日志的具体信息
 }

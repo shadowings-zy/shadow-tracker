@@ -3,14 +3,15 @@
  * @author shadowingszy
  */
 
-import { captureDeviceInfo } from './device-handler'
-import { capturePerformance } from './page-performance-handler'
-import { captureEvent } from './event-handler'
-import { captureJsError } from './js-error-handler'
-import { generateTimeTravelCode } from './time-travel-handler'
-import { captureXMLHttpRequest } from './xml-http-request-handler'
+import { captureDeviceInfo } from './device-handler';
+import { capturePerformance } from './page-performance-handler';
+import { captureEvent } from './event-handler';
+import { captureJsError } from './js-error-handler';
+import { generateTimeTravelCode } from './time-travel-handler';
+import { captureXMLHttpRequest } from './xml-http-request-handler';
 
 const defaultOptions = {
+  sessionId: `${Date.now()}${Math.floor(Math.random() * 1000)}`,
   useClass: false,
   maxResponseTextLength: 1000,
   timeTracelInitTime: 3000,
@@ -25,27 +26,27 @@ const defaultOptions = {
   customizeErrorLog: function (error) {},
   customizeXMLHttpRequestLog: function (event) {},
   customizeDeviceLog: function (userAgent) {},
-  customizePerformanceLog: function (performance) {},
-}
+  customizePerformanceLog: function (performance) {}
+};
 
 class Tracker {
   constructor() {
-    this.trackerInitialized = false // tracker是否已经初始化，使tracker成为单例
-    this.trackerOptions = defaultOptions // tracker的设置
-    this.fingureprintInfo = getFingerprint()
-    this.logList = [] // 日志列表
+    this.trackerInitialized = false; // tracker是否已经初始化，使tracker成为单例
+    this.trackerOptions = defaultOptions; // tracker的设置
+    this.logList = []; // 日志列表
+    this.sessionId = ''; // 日志sessionId
   }
 
   getDeviceInfo() {
-    captureDeviceInfo(this)
+    captureDeviceInfo(this);
   }
 
   getPerformanceInfo() {
-    capturePerformance(this)
+    capturePerformance(this);
   }
 
   getLogList() {
-    return this.logList
+    return this.logList;
   }
 
   getTimeTravelCode() {
@@ -54,25 +55,27 @@ class Tracker {
       this.trackerOptions.timeTracelInitTime,
       this.trackerOptions.timeTravelClickDelayTime,
       this.trackerOptions.timeTracelInputDelayTime
-    )
+    );
   }
 
   init(options = {}) {
-    this.trackerOptions = Object.assign(defaultOptions, options)
+    this.trackerOptions = Object.assign(defaultOptions, options);
+    this.sessionId = this.trackerOptions.sessionId;
+
     if (!this.trackerInitialized) {
       if (this.trackerOptions.captureEvent) {
-        captureEvent(this)
+        captureEvent(this);
       }
       if (this.trackerOptions.captureJsError) {
-        captureJsError(this)
+        captureJsError(this);
       }
       if (this.trackerOptions.captureXMLHttpRequest) {
-        captureXMLHttpRequest(this)
+        captureXMLHttpRequest(this);
       }
-      this.trackerInitialized = true
+      this.trackerInitialized = true;
     }
-    return this
+    return this;
   }
 }
 
-export default Tracker
+export default Tracker;

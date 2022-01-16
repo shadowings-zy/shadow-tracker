@@ -11,35 +11,38 @@
  * @param {*} inputTime 输入时间
  */
 export function generateTimeTravelCode(logList, initTime, clickDelayTime, inputDelayTime) {
-  const userOperationList = getUserOperationList(logList)
+  const userOperationList = getUserOperationList(logList);
   if (userOperationList.length > 0) {
-    const mergedOperationList = mergeKeyDown(userOperationList)
-    let currentTime = mergedOperationList[0].logTime
-    let nightWatchCode = `function test(browser) {\nbrowser\n.url(${mergedOperationList[0].url}).pause(${initTime})\n`
+    const mergedOperationList = mergeKeyDown(userOperationList);
+    let currentTime = mergedOperationList[0].logTime;
+    let nightWatchCode = `function test(browser) {\nbrowser\n.url(${mergedOperationList[0].url}).pause(${initTime})\n`;
     for (let a = 0; a < mergedOperationList.length; a++) {
-      const trackData = mergedOperationList[a]
-      const trackLogContent = trackData.logContent
+      const trackData = mergedOperationList[a];
+      const trackLogContent = trackData.logContent;
 
-      let nextTime = 0
+      let nextTime = 0;
       if (a + 1 !== mergedOperationList.length) {
-        nextTime = mergedOperationList[a + 1].logTime - currentTime
+        nextTime = mergedOperationList[a + 1].logTime - currentTime;
       }
 
       if (trackLogContent.trackingType === 'mousedown') {
-        nightWatchCode += `.assert.elementPresent("${trackLogContent.domPath}")\n`
-        nightWatchCode += `.click("${trackLogContent.domPath}").pause(${nextTime + clickDelayTime})\n`
-        currentTime = trackData.logTime
+        nightWatchCode += `.assert.elementPresent("${trackLogContent.domPath}")\n`;
+        nightWatchCode += `.click("${trackLogContent.domPath}").pause(${
+          nextTime + clickDelayTime
+        })\n`;
+        currentTime = trackData.logTime;
       } else if (trackLogContent.trackingType === 'keyup' && trackLogContent.finalInput) {
-        nightWatchCode += `.setValue("${trackLogContent.domPath}", "${trackLogContent.currentValue}").pause(${nextTime +
-          inputDelayTime})\n`
-        currentTime = trackData.logTime
+        nightWatchCode += `.setValue("${trackLogContent.domPath}", "${
+          trackLogContent.currentValue
+        }").pause(${nextTime + inputDelayTime})\n`;
+        currentTime = trackData.logTime;
       }
     }
-    nightWatchCode = `${nightWatchCode}}`
+    nightWatchCode = `${nightWatchCode}}`;
 
-    return nightWatchCode
+    return nightWatchCode;
   } else {
-    return ''
+    return '';
   }
 }
 
@@ -48,13 +51,13 @@ export function generateTimeTravelCode(logList, initTime, clickDelayTime, inputD
  * @param {*} logList
  */
 function getUserOperationList(logList) {
-  const output = []
+  const output = [];
   for (const item of logList) {
     if (item.logType === 'Event Log') {
-      output.push(item)
+      output.push(item);
     }
   }
-  return output
+  return output;
 }
 
 /**
@@ -62,37 +65,37 @@ function getUserOperationList(logList) {
  * @param {*} userOperationList
  */
 function mergeKeyDown(userOperationList) {
-  console.log(userOperationList)
+  console.log(userOperationList);
   for (let a = 0; a < userOperationList.length - 1; a++) {
     const isFinalInput =
       (userOperationList[a].logContent.trackingType === 'keyup' &&
         userOperationList[a + 1].logContent.trackingType !== 'keyup') ||
       (userOperationList[a].logContent.trackingType === 'keyup' &&
         userOperationList[a + 1].logContent.trackingType === 'keyup' &&
-        userOperationList[a].logContent.domPath !== userOperationList[a + 1].logContent.domPath)
+        userOperationList[a].logContent.domPath !== userOperationList[a + 1].logContent.domPath);
     if (isFinalInput) {
-      userOperationList[a].logContent.finalInput = true
+      userOperationList[a].logContent.finalInput = true;
     }
   }
 
   // 对数组中最后一项单独处理
   if (userOperationList.length > 1) {
-    const lastItem = userOperationList[userOperationList.length - 1].logContent
-    const previousLastItem = userOperationList[userOperationList.length - 2].logContent
+    const lastItem = userOperationList[userOperationList.length - 1].logContent;
+    const previousLastItem = userOperationList[userOperationList.length - 2].logContent;
     const flag =
       lastItem.trackingType === 'keyup' &&
       previousLastItem.trackingType === 'keyup' &&
-      lastItem.domPath === previousLastItem.domPath
+      lastItem.domPath === previousLastItem.domPath;
     if (flag) {
-      userOperationList[userOperationList.length - 1].logContent.finalInput = true
+      userOperationList[userOperationList.length - 1].logContent.finalInput = true;
     }
   } else if (userOperationList.length === 1) {
-    const lastItem = userOperationList[userOperationList.length - 1].logContent
+    const lastItem = userOperationList[userOperationList.length - 1].logContent;
     if (lastItem.trackingType === 'keyup') {
-      userOperationList[userOperationList.length - 1].logContent.finalInput = true
+      userOperationList[userOperationList.length - 1].logContent.finalInput = true;
     }
   }
 
-  console.log(userOperationList)
-  return userOperationList
+  console.log(userOperationList);
+  return userOperationList;
 }

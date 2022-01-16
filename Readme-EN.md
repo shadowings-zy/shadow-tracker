@@ -25,10 +25,10 @@ npm install shadow-tracker
 ```
 
 ```javascript
-import tracker from 'shadow-tracker'
+import tracker from 'shadow-tracker';
 
-Tracker.Init() // initialize tracker
-Console.Log(tracker.Getloglist()) // get log information
+Tracker.Init(); // initialize tracker
+Console.Log(tracker.Getloglist()); // get log information
 ```
 
 ### 2-2. import through the "script" tag
@@ -36,8 +36,8 @@ Console.Log(tracker.Getloglist()) // get log information
 ```html
 <script src="./shadow-tracker-script.js"></script>
 <script>
-  Window.Tracker.Init() // initialize tracker
-  Console.Log(window.Tracker.Getloglist()) // get the log information
+  Window.Tracker.Init(); // initialize tracker
+  Console.Log(window.Tracker.Getloglist()); // get the log information
 </script>
 ```
 
@@ -55,7 +55,7 @@ Options - configuration item object, see part 4 "options"
 Use example:
 
 ```javascript
-tracker.init({})
+tracker.init({});
 ```
 
 ### 3-2. getDeviceInfo()
@@ -65,7 +65,7 @@ Get user's device information and write the device information into the loglist.
 Use example:
 
 ```javascript
-console.log(tracker.getDeviceInfo())
+console.log(tracker.getDeviceInfo());
 ```
 
 ### 3-3. getPerformanceInfo()
@@ -75,7 +75,7 @@ Get the page performance data and write the page performance information into th
 Use example:
 
 ```javascript
-console.log(tracker.getPerformanceInfo())
+console.log(tracker.getPerformanceInfo());
 ```
 
 ### 3-4. getLogList()
@@ -85,7 +85,7 @@ Get all log data. For details, see part 5 "loglist description and custom log"
 Use example:
 
 ```javascript
-console.log(tracker.getLogList())
+console.log(tracker.getLogList());
 ```
 
 ### 3-5. getTimeTravelCode()
@@ -95,7 +95,7 @@ Get the time travel code. For details, see part 6 "time travel"
 Use example:
 
 ```javascript
-console.log(tracker.getTimeTravelCode())
+console.log(tracker.getTimeTravelCode());
 ```
 
 ## 4. Options
@@ -105,22 +105,23 @@ When initialize tracker, a configuration object can be passed in to enrich the f
 ```javascript
 //This is the default configuration item for shadow-tracker, let's take this example
 const option = {
-  useClass: false, //whether to use class as the unique ID of the element
-  maxResponseTextLength: 1000, //maximum length of XMLHttpRequest return value
-  timeTracelInitTime: 3000, //wait time for initialization page in generated time travel code
-  timeTravelClickDelayTime: 1000, //delay time of clicking element in generated time travel code
-  timeTracelInputDelayTime: 1000, //delay time of input data in generated time travel code
+  sessionId: `${Date.now()}${Math.floor(Math.random() * 1000)}`, // sessionId, default is current timestamp and random number
+  useClass: false, // whether to use class as the unique ID of the element
+  maxResponseTextLength: 1000, // maximum length of XMLHttpRequest return value
+  timeTracelInitTime: 3000, // wait time for initialization page in generated time travel code
+  timeTravelClickDelayTime: 1000, // delay time of clicking element in generated time travel code
+  timeTracelInputDelayTime: 1000, // delay time of input data in generated time travel code
   captureEvent: true, // whether to capture event log
   captureJsError: true, // whether to capture error log
   captureXMLHttpRequest: true, // whether to capture request log
-  custom: false, //whether to add custom data to the log object
-  customizeLog: function (logType, logContent) {}, //functions that generate custom log data, see part 5 "LogList description and custom Log"
-  customizeEventLog: function (event) {}, //Functions to generate custom event logs, see part 5 "LogList description and custom logs"
-  customizeErrorLog: function (error) {}, //Functions to generate custom error logs, see part 5 "LogList description and custom logs"
-  customizeXMLHttpRequestLog: function (event) {}, //Functions to generate custom XMLHttpRequest logs, see part 5 "LogList description and custom logs"
-  customizeDeviceLog: function (userAgent) {}, //Functions to generate custom device logs, see part 5 "LogList description and custom logs"
-  customizePerformanceLog: function (performance) {}, //Functions to generate custom performance logs, see part 5 "LogList description and custom logs"
-}
+  custom: false, // whether to add custom data to the log object
+  customizeLog: function (logType, logContent) {}, // functions that generate custom log data, see part 5 "LogList description and custom Log"
+  customizeEventLog: function (event) {}, // functions to generate custom event logs, see part 5 "LogList description and custom logs"
+  customizeErrorLog: function (error) {}, // functions to generate custom error logs, see part 5 "LogList description and custom logs"
+  customizeXMLHttpRequestLog: function (event) {}, // functions to generate custom XMLHttpRequest logs, see part 5 "LogList description and custom logs"
+  customizeDeviceLog: function (userAgent) {}, // functions to generate custom device logs, see part 5 "LogList description and custom logs"
+  customizePerformanceLog: function (performance) {} // functions to generate custom performance logs, see part 5 "LogList description and custom logs"
+};
 ```
 
 ## 5. Loglist description and custom log
@@ -140,6 +141,7 @@ The log object is the basic log object, which contains the following properties:
 {
   "logtime": 1584262658187, // log generation time
   "url": "www.shadowingszy.top", // the URL that generates the log page
+  "logSession": "xxx", // sessionId
   "logType": "Error Log", // the types of logs, including: event log | error log | XMLHttpRequest log | device log | performance log
   "logContent": {} // specific log information
 }
@@ -151,13 +153,14 @@ The custom log object contains the following properties:
 
 ```javascript
 {
-  "Logtime": 1584262658187, // log generation time
-  "URL": "www.shadowingszy. Top", // the URL that generates the log page
-  "Logtype": "error log", // the types of logs, including: event log | error log | XMLHttpRequest log | device log | performance log
-  "Logcontent": {} // specific log information
-  "Custom": {// custom log fields
-    "Log": {}, // the value returned after executing the customizelog() method in the configuration item
-    "Detail": {} // the value returned by a type of log after executing the corresponding customizeeventlog(), customizeerrorlog(), customizexmlhttprequestlog(), customizedevicelog(), customizeperformancelog() methods in the configuration item
+  "logtime": 1584262658187, // log generation time
+  "url": "www.shadowingszy.top", // the URL that generates the log page
+  "logSession": "xxx", // sessionId
+  "logtype": "error log", // the types of logs, including: event log | error log | XMLHttpRequest log | device log | performance log
+  "logcontent": {} // specific log information
+  "custom": {// custom log fields
+    "log": {}, // the value returned after executing the customizelog() method in the configuration item
+    "detail": {} // the value returned by a type of log after executing the corresponding customizeeventlog(), customizeerrorlog(), customizexmlhttprequestlog(), customizedevicelog(), customizeperformancelog() methods in the configuration item
   }
 }
 ```

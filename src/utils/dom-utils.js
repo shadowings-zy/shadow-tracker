@@ -10,37 +10,37 @@
  */
 export function getDomPath(element, useClass = false) {
   if (!(element instanceof HTMLElement)) {
-    console.warn('input element is not a HTML element!')
-    return ''
+    console.warn('input element is not a HTML element!');
+    return '';
   }
-  let domPath = []
-  let elem = element
+  let domPath = [];
+  let elem = element;
   while (elem) {
-    let domDesc = getDomDesc(elem, useClass)
+    let domDesc = getDomDesc(elem, useClass);
     if (!domDesc) {
-      break
+      break;
     }
-    domPath.unshift(domDesc)
+    domPath.unshift(domDesc);
     if (querySelector(domPath.join('>')) === element || domDesc.indexOf('body') >= 0) {
-      break
+      break;
     }
-    domPath.shift()
-    const children = elem.parentNode.children
+    domPath.shift();
+    const children = elem.parentNode.children;
     if (children.length > 1) {
       for (let i = 0; i < children.length; i++) {
         if (children[i] === elem) {
-          domDesc += `:nth-child(${i + 1})`
-          break
+          domDesc += `:nth-child(${i + 1})`;
+          break;
         }
       }
     }
-    domPath.unshift(domDesc)
+    domPath.unshift(domDesc);
     if (querySelector(domPath.join('>')) === element) {
-      break
+      break;
     }
-    elem = elem.parentNode
+    elem = elem.parentNode;
   }
-  return domPath.join('>')
+  return domPath.join('>');
 }
 
 /**
@@ -49,25 +49,25 @@ export function getDomPath(element, useClass = false) {
  * @param {*} useClass  是否使用class作为描述
  */
 export function getDomDesc(element, useClass = false) {
-  const domDesc = []
+  const domDesc = [];
   if (!element || !element.tagName) {
-    return ''
+    return '';
   }
   if (element.id) {
-    return `#${element.id}`
+    return `#${element.id}`;
   }
-  domDesc.push(element.tagName.toLowerCase())
+  domDesc.push(element.tagName.toLowerCase());
   if (useClass) {
-    const className = element.className
+    const className = element.className;
     if (className && typeof className === 'string') {
-      const classes = className.split(/\s+/)
-      domDesc.push(`.${classes.join('.')}`)
+      const classes = className.split(/\s+/);
+      domDesc.push(`.${classes.join('.')}`);
     }
   }
   if (element.name) {
-    domDesc.push(`[name=${element.name}]`)
+    domDesc.push(`[name=${element.name}]`);
   }
-  return domDesc.join('')
+  return domDesc.join('');
 }
 
 /**
@@ -75,7 +75,11 @@ export function getDomDesc(element, useClass = false) {
  * @param {*} queryString   选择器字符串
  */
 export function querySelector(queryString) {
-  return document.getElementById(queryString) || document.getElementsByName(queryString)[0] || document.querySelector(queryString)
+  return (
+    document.getElementById(queryString) ||
+    document.getElementsByName(queryString)[0] ||
+    document.querySelector(queryString)
+  );
 }
 
 /**
@@ -83,11 +87,11 @@ export function querySelector(queryString) {
  * @param {*} element   目标对象
  */
 export function getBoundingClientRect(element) {
-  const rect = element.getBoundingClientRect()
+  const rect = element.getBoundingClientRect();
   return {
     width: rect.width || rect.right - rect.left,
     height: rect.height || rect.bottom - rect.top,
     left: rect.left || 0,
     top: rect.top || 0
-  }
+  };
 }

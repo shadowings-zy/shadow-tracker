@@ -8,35 +8,35 @@
  * @param {*} event event对象
  */
 export function getEvent(event) {
-  event = event || window.event
+  event = event || window.event;
   if (!event) {
-    return event
+    return event;
   }
   if (!event.target) {
-    event.target = event.srcElement
+    event.target = event.srcElement;
   }
   if (!event.currentTarget) {
-    event.currentTarget = event.srcElement
+    event.currentTarget = event.srcElement;
   }
-  return event
+  return event;
 }
 
 /**
  * 生成eventListener的方法。
  */
 export function getEventListenerMethod() {
-  let addMethod = 'addEventListener'
-  let removeMethod = 'removeEventListener'
-  let prefix = ''
+  let addMethod = 'addEventListener';
+  let removeMethod = 'removeEventListener';
+  let prefix = '';
 
   if (!window.addEventListener) {
-    addMethod = 'attachEvent'
-    removeMethod = 'detachEvent'
-    prefix = 'on'
+    addMethod = 'attachEvent';
+    removeMethod = 'detachEvent';
+    prefix = 'on';
   }
   return {
     addMethod,
     removeMethod,
-    prefix,
-  }
+    prefix
+  };
 }
