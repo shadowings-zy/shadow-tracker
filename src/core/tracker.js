@@ -4,15 +4,10 @@
  */
 
 import { captureDeviceInfo } from './device-handler'
-
 import { capturePerformance } from './page-performance-handler'
-
 import { captureEvent } from './event-handler'
-
 import { captureJsError } from './js-error-handler'
-
 import { generateTimeTravelCode } from './time-travel-handler'
-
 import { captureXMLHttpRequest } from './xml-http-request-handler'
 
 const defaultOptions = {
@@ -21,19 +16,23 @@ const defaultOptions = {
   timeTracelInitTime: 3000,
   timeTravelClickDelayTime: 1000,
   timeTracelInputDelayTime: 1000,
+  captureEvent: true,
+  captureJsError: true,
+  captureXMLHttpRequest: true,
   custom: false,
-  customizeLog: (logType, logContent) => {},
-  customizeEventLog: (event) => {},
-  customizeErrorLog: (error) => {},
-  customizeXMLHttpRequestLog: (event) => {},
-  customizeDeviceLog: (userAgent) => {},
-  customizePerformanceLog: (performance) => {}
+  customizeLog: function (logType, logContent) {},
+  customizeEventLog: function (event) {},
+  customizeErrorLog: function (error) {},
+  customizeXMLHttpRequestLog: function (event) {},
+  customizeDeviceLog: function (userAgent) {},
+  customizePerformanceLog: function (performance) {},
 }
 
 class Tracker {
   constructor() {
     this.trackerInitialized = false // tracker是否已经初始化，使tracker成为单例
     this.trackerOptions = defaultOptions // tracker的设置
+    this.fingureprintInfo = getFingerprint()
     this.logList = [] // 日志列表
   }
 
@@ -61,9 +60,15 @@ class Tracker {
   init(options = {}) {
     this.trackerOptions = Object.assign(defaultOptions, options)
     if (!this.trackerInitialized) {
-      captureEvent(this)
-      captureJsError(this)
-      captureXMLHttpRequest(this)
+      if (this.trackerOptions.captureEvent) {
+        captureEvent(this)
+      }
+      if (this.trackerOptions.captureJsError) {
+        captureJsError(this)
+      }
+      if (this.trackerOptions.captureXMLHttpRequest) {
+        captureXMLHttpRequest(this)
+      }
       this.trackerInitialized = true
     }
     return this

@@ -1,6 +1,6 @@
 {
   "name": "shadow-tracker",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A user experience management framework for monitoring front-end data",
   "repository": "shadowings-zy/shadow-tracker",
   "license": "MIT",

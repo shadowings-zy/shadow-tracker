@@ -110,13 +110,16 @@ const option = {
   timeTracelInitTime: 3000, //wait time for initialization page in generated time travel code
   timeTravelClickDelayTime: 1000, //delay time of clicking element in generated time travel code
   timeTracelInputDelayTime: 1000, //delay time of input data in generated time travel code
+  captureEvent: true, // whether to capture event log
+  captureJsError: true, // whether to capture error log
+  captureXMLHttpRequest: true, // whether to capture request log
   custom: false, //whether to add custom data to the log object
-  customizeLog: (logType, logContent) => {}, //functions that generate custom log data, see part 5 "LogList description and custom Log"
-  customizeEventLog: (event) => {}, //Functions to generate custom event logs, see part 5 "LogList description and custom logs"
-  customizeErrorLog: (error) => {}, //Functions to generate custom error logs, see part 5 "LogList description and custom logs"
-  customizeXMLHttpRequestLog: (event) => {}, //Functions to generate custom XMLHttpRequest logs, see part 5 "LogList description and custom logs"
-  customizeDeviceLog: (userAgent) => {}, //Functions to generate custom device logs, see part 5 "LogList description and custom logs"
-  customizePerformanceLog: (performance) => {} //Functions to generate custom performance logs, see part 5 "LogList description and custom logs"
+  customizeLog: function (logType, logContent) {}, //functions that generate custom log data, see part 5 "LogList description and custom Log"
+  customizeEventLog: function (event) {}, //Functions to generate custom event logs, see part 5 "LogList description and custom logs"
+  customizeErrorLog: function (error) {}, //Functions to generate custom error logs, see part 5 "LogList description and custom logs"
+  customizeXMLHttpRequestLog: function (event) {}, //Functions to generate custom XMLHttpRequest logs, see part 5 "LogList description and custom logs"
+  customizeDeviceLog: function (userAgent) {}, //Functions to generate custom device logs, see part 5 "LogList description and custom logs"
+  customizePerformanceLog: function (performance) {}, //Functions to generate custom performance logs, see part 5 "LogList description and custom logs"
 }
 ```
 

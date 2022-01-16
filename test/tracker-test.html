@@ -23,7 +23,7 @@
     console.error('this is error test')
 
     // 当页面渲染完成后1s记录页面统计数据和设备数据
-    setTimeout(() => {
+    setTimeout(function () {
       window.tracker.getPerformanceInfo()
       window.tracker.getDeviceInfo()
     }, 1000)
