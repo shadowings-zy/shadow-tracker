@@ -1,0 +1,33 @@
+{
+  "name": "shadow-tracker",
+  "version": "1.0.6",
+  "description": "A user experience management framework for monitoring front-end data",
+  "repository": "shadowings-zy/shadow-tracker",
+  "license": "MIT",
+  "main": "shadow-tracker/shadow-tracker-npm",
+  "files": [
+    "shadow-tracker",
+    "index.d.ts",
+    "../README-EN.md",
+    "../README.md"
+  ],
+  "keywords": [
+    "front-end",
+    "monitor",
+    "UEM"
+  ],
+  "author": "shadowings-zy",
+  "scripts": {
+    "build-npm": "rm ./shadow-tracker/shadow-tracker-npm.js && webpack --config webpack.npm.config.js",
+    "build-script": "rm ./shadow-tracker/shadow-tracker-script.js && webpack --config webpack.script.config.js"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.3",
+    "@babel/polyfill": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "babel-loader": "^8.0.6",
+    "prettier": "^2.5.1",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
+  }
+}

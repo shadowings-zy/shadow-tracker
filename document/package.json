@@ -1,0 +1,14 @@
+{
+  "name": "shadow-tracker-docs",
+  "version": "1.0.0",
+  "description": "shadow-tracker document site",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "vuepress dev markdown",
+    "build": "vuepress build markdown"
+  },
+  "devDependencies": {
+    "vuepress": "^1.9.5"
+  }
+}

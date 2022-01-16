@@ -1,4 +1,4 @@
-import Tracker from './core/tracker';
+import Tracker from '../core/tracker';
 
 if (typeof window !== 'undefined') {
   const tracker = new Tracker();

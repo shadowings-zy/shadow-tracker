@@ -1,18 +1,18 @@
-const path = require('path')
+const path = require('path');
 
 module.exports = {
-  entry: './src/script-entry.js',
+  entry: './entry/script-entry.js',
   output: {
     filename: 'shadow-tracker-script.js',
     path: path.resolve(__dirname, 'shadow-tracker')
   },
-  module:{
-    rules:[
+  module: {
+    rules: [
       {
-        test:/(\.js)$/,
+        test: /(\.js)$/,
         loader: 'babel-loader',
-        exclude:path.resolve(__dirname,'node_modules')
+        exclude: path.resolve(__dirname, 'node_modules')
       }
     ]
   }
-}
+};

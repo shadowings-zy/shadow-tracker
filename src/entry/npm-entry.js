@@ -1,4 +1,4 @@
-import Tracker from './core/tracker';
+import Tracker from '../core/tracker';
 
 const tracker = new Tracker();
 
