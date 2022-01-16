@@ -65,7 +65,6 @@ function getUserOperationList(logList) {
  * @param {*} userOperationList
  */
 function mergeKeyDown(userOperationList) {
-  console.log(userOperationList);
   for (let a = 0; a < userOperationList.length - 1; a++) {
     const isFinalInput =
       (userOperationList[a].logContent.trackingType === 'keyup' &&
@@ -96,6 +95,5 @@ function mergeKeyDown(userOperationList) {
     }
   }
 
-  console.log(userOperationList);
   return userOperationList;
 }
