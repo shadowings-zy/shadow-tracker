@@ -286,12 +286,16 @@ The device log object is a log object that records user device information. It w
 
 ```javascript
 {
-"Browser": true, // whether it is a PC browser
-"Mobile": false, // is the mobile browser
-"Type": "computer", // the category of the current terminal, including: computer, IOS, Android, wechat, Windows Phone, unknown
-"Version": "80.0.3987.132", // version number
-"Name": "Chrome", // the category of the current browser, including: MSIE, Firefox, chrome, sarfari, Android, IOS, unknown
-"Useragent": "" // value of navigator.useragent
+  "browser": true, // whether it is a PC browser
+  "mobile": false, // is the mobile browser
+  "type": "computer", // the category of the current terminal, including: computer, IOS, Android, wechat, Windows Phone, unknown
+  "version": "80.0.3987.132", // version number
+  "name": "Chrome", // the category of the current browser, including: MSIE, Firefox, chrome, sarfari, Android, IOS, unknown
+  "userAgent": "", // value of navigator.useragent
+  "screenWidth": 1920, // screen width
+  "screenHeight": 1080, // screen height
+  "clientWidth": 1920, // client width
+  "clientHeight": 1080, // client height
 }
 ```
 

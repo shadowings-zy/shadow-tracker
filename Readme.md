@@ -296,7 +296,11 @@ Device Log 对象是记录用户设备信息的日志对象，它会呈现在对
   "type": "computer", // 当前终端的类别，包含：computer, ios, android, wechat, windows phone, unknow
   "version": "80.0.3987.132", // 版本号
   "name": "chrome", // 当前浏览器的类别，包含：msie, firefox, chrome, sarfari, android, ios, unknown
-  "userAgent": "" // navigator.userAgent的值
+  "userAgent": "", // navigator.userAgent的值
+  "screenWidth": 1920, // 屏幕宽度
+  "screenHeight": 1080, // 屏幕高度
+  "clientWidth": 1920, // 网页宽度
+  "clientHeight": 1080, // 网页高度
 }
 ```
 

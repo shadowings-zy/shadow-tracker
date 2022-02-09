@@ -9,13 +9,24 @@ import { getEvent, getEventListenerMethod } from '../utils/event-utils';
 
 import { getBoundingClientRect, getDomPath } from '../utils/dom-utils';
 
+
 export function captureEvent(tracker) {
+  captureDomEvent(tracker)
+  captureUrlHashEvent(tracker)
+  captureUrlHistoryEvent(tracker)
+}
+
+/**
+ * 处理Dom相关的事件
+ * @param {*} tracker 
+ */
+function captureDomEvent(tracker) {
   const events = ['mousedown', 'keyup'];
-  const eventMethodObj = getEventListenerMethod();
+  const { addMethod, prefix } = getEventListenerMethod();
   for (let i = 0; i < events.length; i++) {
     let eventName = events[i];
-    document.body[eventMethodObj.addMethod](
-      eventMethodObj.prefix + eventName,
+    document.body[addMethod](
+      prefix + eventName,
       function (event) {
         const eventFix = getEvent(event);
         if (!eventFix) {
@@ -33,16 +44,16 @@ export function captureEvent(tracker) {
           eventLog = Object.assign(trackData, inputTrackData);
         }
 
-        eventLog = new Log(
+        const log = new Log(
           tracker.trackerOptions,
           'Event Log',
           eventLog,
           tracker.sessionId,
           tracker.trackerOptions.customizeEventLog(eventFix)
         );
-        tracker.logList.push(eventLog);
+        tracker.logList.push(log);
 
-        console.debug('Event Traking Log:\n', eventLog);
+        console.debug('DOM Event Traking Log:\n', log);
       },
       false
     );
@@ -93,5 +104,84 @@ function handleInputTrack(event) {
       inputKey: event.key,
       currentValue: event.target.value
     };
+  }
+}
+
+/**
+ * 处理url hash相关的事件
+ * @param {*} tracker 
+ */
+function captureUrlHashEvent(tracker) {
+  const { addMethod, prefix } = getEventListenerMethod();
+  document.body[addMethod](prefix + 'hashchange', function (event) {
+    const eventFix = getEvent(event);
+    if (!eventFix) {
+      return;
+    }
+
+    let eventLog = {
+      trackingType: 'urlchange'
+    }
+    const hashData = handleHashTrack(event)
+    eventLog = Object.assign(eventLog, hashData)
+
+    const log = new Log(
+      tracker.trackerOptions,
+      'Event Log',
+      eventLog,
+      tracker.sessionId,
+      tracker.trackerOptions.customizeEventLog(eventFix)
+    );
+    tracker.logList.push(log);
+
+    console.debug('Url Event Traking Log:\n', log);
+  })
+}
+
+function handleHashTrack(event) {
+  return {
+    old: event.oldUrl,
+    new: event.newUrl
+  }
+}
+
+/**
+ * 处理url history相关的event
+ * @param {*} tracker 
+ */
+function captureUrlHistoryEvent(tracker) {
+  // 首先要监听popstate
+  const { addMethod, prefix } = getEventListenerMethod();
+  document.body[addMethod](prefix + 'popstate', function (event) {
+    const eventFix = getEvent(event);
+    if (!eventFix) {
+      return;
+    }
+
+    let eventLog = {
+      trackingType: 'urlchange'
+    }
+    const hashData = handlePopStateTrack(event)
+    eventLog = Object.assign(eventLog, hashData)
+
+    const log = new Log(
+      tracker.trackerOptions,
+      'Event Log',
+      eventLog,
+      tracker.sessionId,
+      tracker.trackerOptions.customizeEventLog(eventFix)
+    );
+    tracker.logList.push(log);
+
+    console.debug('Url Event Traking Log:\n', log);
+  })
+
+  // 然后要重写一下history api中的pushState和replaceState函数
+}
+
+function handlePopStateTrack(event) {
+  return {
+    old: event.oldUrl,
+    new: event.newUrl
   }
 }

@@ -11,7 +11,7 @@
     "document"
   ],
   "scripts": {
-    "build-all": "cd src && npm run build-npm && npm run build-script",
+    "build-all": "cd src/tracker && npm run build-npm && npm run build-script",
     "format": "prettier --write './src/**/*.js'",
     "docs-update": "cp -rf ./README-EN.md ./document/markdown/en/document.md && cp -rf ./README.md ./document/markdown/document.md",
     "docs-build": "npm run docs-update && cd document && npm run build",
