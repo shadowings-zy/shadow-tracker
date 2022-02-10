@@ -9,8 +9,10 @@ import { getEvent, getEventListenerMethod } from '../utils/event-utils';
 
 import { getBoundingClientRect, getDomPath } from '../utils/dom-utils';
 
+let oldUrl;
 
 export function captureEvent(tracker) {
+  oldUrl = window.location.href
   captureDomEvent(tracker)
   captureUrlHashEvent(tracker)
   captureUrlHistoryEvent(tracker)
@@ -113,17 +115,23 @@ function handleInputTrack(event) {
  */
 function captureUrlHashEvent(tracker) {
   const { addMethod, prefix } = getEventListenerMethod();
-  document.body[addMethod](prefix + 'hashchange', function (event) {
+  console.log('capture url hash event');
+  window[addMethod](prefix + 'hashchange', function (event) {
     const eventFix = getEvent(event);
     if (!eventFix) {
       return;
     }
 
-    let eventLog = {
-      trackingType: 'urlchange'
+    if (oldUrl === window.location.href) {
+      return;
     }
-    const hashData = handleHashTrack(event)
-    eventLog = Object.assign(eventLog, hashData)
+
+    let eventLog = {
+      trackingType: 'urlchange',
+      oldUrl,
+      newUrl: window.location.href
+    }
+    oldUrl = window.location.href
 
     const log = new Log(
       tracker.trackerOptions,
@@ -138,31 +146,31 @@ function captureUrlHashEvent(tracker) {
   })
 }
 
-function handleHashTrack(event) {
-  return {
-    old: event.oldUrl,
-    new: event.newUrl
-  }
-}
-
 /**
  * 处理url history相关的event
  * @param {*} tracker 
  */
 function captureUrlHistoryEvent(tracker) {
+  console.log('capture url history event');
   // 首先要监听popstate
   const { addMethod, prefix } = getEventListenerMethod();
-  document.body[addMethod](prefix + 'popstate', function (event) {
+  window[addMethod](prefix + 'popstate', function (event) {
     const eventFix = getEvent(event);
     if (!eventFix) {
       return;
     }
 
-    let eventLog = {
-      trackingType: 'urlchange'
+    if (oldUrl === window.location.href) {
+      return;
     }
-    const hashData = handlePopStateTrack(event)
-    eventLog = Object.assign(eventLog, hashData)
+
+    let eventLog = {
+      trackingType: 'urlchange',
+      oldUrl,
+      newUrl: window.location.href
+    }
+
+    oldUrl = window.location.href
 
     const log = new Log(
       tracker.trackerOptions,
@@ -177,11 +185,58 @@ function captureUrlHistoryEvent(tracker) {
   })
 
   // 然后要重写一下history api中的pushState和replaceState函数
-}
+  let originPushState = history.pushState
+  history.pushState = function (...args) {
+    originPushState.apply(history, arguments)
 
-function handlePopStateTrack(event) {
-  return {
-    old: event.oldUrl,
-    new: event.newUrl
+    if (oldUrl === window.location.href) {
+      return;
+    }
+
+    let eventLog = {
+      trackingType: 'urlchange',
+      oldUrl,
+      newUrl: window.location.href
+    }
+
+    oldUrl = window.location.href
+
+    const log = new Log(
+      tracker.trackerOptions,
+      'Event Log',
+      eventLog,
+      tracker.sessionId,
+      {}
+    );
+    tracker.logList.push(log);
+
+    console.debug('Url Event Traking Log:\n', log);
+  }
+
+  let originReplaceState = history.replaceState
+  history.replaceState = function () {
+    originReplaceState.apply(history, arguments)
+    if (oldUrl === window.location.href) {
+      return;
+    }
+
+    let eventLog = {
+      trackingType: 'urlchange',
+      oldUrl,
+      newUrl: window.location.href
+    }
+
+    oldUrl = window.location.href
+
+    const log = new Log(
+      tracker.trackerOptions,
+      'Event Log',
+      eventLog,
+      tracker.sessionId,
+      {}
+    );
+    tracker.logList.push(log);
+
+    console.debug('Url Event Traking Log:\n', log);
   }
 }
