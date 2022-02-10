@@ -1,6 +1,6 @@
 {
   "name": "shadow-tracker",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "A user experience management framework for monitoring front-end data",
   "repository": "shadowings-zy/shadow-tracker",
   "license": "MIT",
@@ -26,9 +26,9 @@
     "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.16.8",
     "babel-loader": "^8.2.3",
+    "core-js": "^2.6.5",
     "prettier": "^2.5.1",
     "webpack": "^4.41.5",
-    "webpack-cli": "^3.3.10",
-    "core-js": "^2.6.5"
+    "webpack-cli": "^3.3.12"
   }
 }
