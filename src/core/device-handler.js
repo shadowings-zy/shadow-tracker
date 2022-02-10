@@ -23,25 +23,33 @@ export function captureDeviceInfo(tracker) {
 
 function getDevice() {
   const userAgent = navigator.userAgent;
+
   let device = {
     browser: false,
     mobile: false,
     type: 'unknown', // 可选项有：computer, ios, android, wechat, windows phone, unknow
     version: 'unknown', // 版本号
     name: 'unknown', // 可选项有：msie, firefox, chrome, sarfari, android, ios, unknown
-    userAgent: navigator.userAgent
+    userAgent,
+    screenWidth: 0,
+    screenHeight: 0,
+    clientWidth: 0,
+    clientHeight: 0
   };
 
   if (userAgent.indexOf('Mobile') === -1) {
-    let browserInfo = getBrowserInfo(userAgent);
+    const browserInfo = getBrowserInfo(userAgent);
     device = Object.assign(device, browserInfo);
     device.browser = true;
     device.type = 'computer';
   } else {
-    let mobileInfo = getMobileInfo(userAgent);
+    const mobileInfo = getMobileInfo(userAgent);
     device = Object.assign(device, mobileInfo);
     device.mobile = true;
   }
+
+  const screenInfo = getScreenInfo();
+  device = Object.assign(device, screenInfo);
 
   return device;
 }
@@ -179,4 +187,16 @@ function getMobileInfo(userAgent) {
   }
 
   return deviceOutput;
+}
+
+/**
+ * 获取浏览器的信息
+ */
+function getScreenInfo() {
+  return {
+    screenWidth: screen.width,
+    screenHeight: screen.height,
+    clientWidth: document.documentElement.clientWidth,
+    clientHeight: document.documentElement.clientHeight
+  };
 }

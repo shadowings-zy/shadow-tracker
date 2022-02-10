@@ -6,7 +6,7 @@ shadow-tracker 是一款轻量级的前端无感知监控插件，它提供的�
 
 | 序号 | 功能                                                                                 | 对应日志类型                   |
 | ---- | ------------------------------------------------------------------------------------ | ------------------------------ |
-| 1    | 收集用户与网页交互时的点击、键盘输入事件                                             | 事件日志（Event Log）          |
+| 1    | 收集用户与网页交互时的点击、键盘输入、url 变更事件                                   | 事件日志（Event Log）          |
 | 2    | 收集所有 JS 的错误信息                                                               | 错误日志（Error Log）          |
 | 3    | 收集所有 XMLHTTPRequest 网络请求信息                                                 | 请求日志（XMLHttpRequest Log） |
 | 4    | 收集页面加载的性能数据信息                                                           | 性能日志（Performance Log）    |
@@ -28,10 +28,10 @@ npm install shadow-tracker
 // 使用import引入tracker即可访问tracker的API
 // 这里只呈现了“初始化tracker”以及“获取日志信息”的代码，其他API使用请参照第三部分“API说明”
 
-import tracker from 'shadow-tracker'
+import tracker from "shadow-tracker";
 
-tracker.init() // 初始化tracker
-console.log(tracker.getLogList()) // 获取日志信息
+tracker.init(); // 初始化tracker
+console.log(tracker.getLogList()); // 获取日志信息
 ```
 
 ### 通过`<script>`标签引入
@@ -42,8 +42,8 @@ console.log(tracker.getLogList()) // 获取日志信息
   // 引入之后tracker对象就会挂到window对象下，使用window.tracker即可访问tracker的API
   // 这里只呈现了“初始化tracker”以及“获取日志信息”的代码，其他API使用请参照第三部分“API说明”
 
-  window.tracker.init() // 初始化tracker
-  console.log(window.tracker.getLogList()) // 获取日志信息
+  window.tracker.init(); // 初始化tracker
+  console.log(window.tracker.getLogList()); // 获取日志信息
 </script>
 ```
 
@@ -61,7 +61,7 @@ options - 传入一个配置项对象，详见第四部分“配置项说明”
 使用样例：
 
 ```javascript
-tracker.init({})
+tracker.init({});
 ```
 
 ### getDeviceInfo()
@@ -71,7 +71,7 @@ tracker.init({})
 使用样例：
 
 ```javascript
-console.log(tracker.getDeviceInfo())
+console.log(tracker.getDeviceInfo());
 ```
 
 ### getPerformanceInfo()
@@ -81,7 +81,7 @@ console.log(tracker.getDeviceInfo())
 使用样例：
 
 ```javascript
-console.log(tracker.getPerformanceInfo())
+console.log(tracker.getPerformanceInfo());
 ```
 
 ### getLogList()
@@ -91,7 +91,7 @@ console.log(tracker.getPerformanceInfo())
 使用样例：
 
 ```javascript
-console.log(tracker.getLogList())
+console.log(tracker.getLogList());
 ```
 
 ### getTimeTravelCode()
@@ -101,7 +101,7 @@ console.log(tracker.getLogList())
 使用样例：
 
 ```javascript
-console.log(tracker.getTimeTravelCode())
+console.log(tracker.getTimeTravelCode());
 ```
 
 ## 配置项说明
@@ -127,7 +127,7 @@ const option = {
   customizeXMLHttpRequestLog: function (event) {}, // 生成自定义XMLHttpRequest log的函数，详见第五部分“logList 说明及自定义 Log”
   customizeDeviceLog: function (userAgent) {}, // 生成自定义device log的函数，详见第五部分“logList 说明及自定义 Log”
   customizePerformanceLog: function (performance) {}, // 生成自定义performance log的函数，详见第五部分“logList 说明及自定义 Log”
-}
+};
 ```
 
 ## logList 说明及自定义 Log
@@ -182,7 +182,7 @@ Log 对象是基础的日志对象，它包含如下属性：
 
 #### 基础说明
 
-Event Log 对象是记录用户点击、输入事件的日志对象，它会呈现在对应种类的 Log 对象的`logContent`属性中。
+Event Log 对象是记录点击、输入、url 变更事件的日志对象，它会呈现在对应种类的 Log 对象的`logContent`属性中。
 Event Log 包含“点击”和“输入”两种日志类型，分别包含如下属性：
 
 点击事件：
@@ -204,6 +204,16 @@ Event Log 包含“点击”和“输入”两种日志类型，分别包含如�
   "trackingType": "keyup", // 事件类别
   "inputKey": "3", // 输入的值
   "currentValue": "123" // 当前输入框的值
+}
+```
+
+url 变更事件：
+
+```javascript
+{
+  "newUrl": "https://www.shadowingszy.top/#new"
+  "oldUrl": "https://www.shadowingszy.top/#old"
+  "trackingType": "urlchange"
 }
 ```
 
@@ -296,7 +306,11 @@ Device Log 对象是记录用户设备信息的日志对象，它会呈现在对
   "type": "computer", // 当前终端的类别，包含：computer, ios, android, wechat, windows phone, unknow
   "version": "80.0.3987.132", // 版本号
   "name": "chrome", // 当前浏览器的类别，包含：msie, firefox, chrome, sarfari, android, ios, unknown
-  "userAgent": "" // navigator.userAgent的值
+  "userAgent": "", // navigator.userAgent的值
+  "screenWidth": 1920, // 屏幕宽度
+  "screenHeight": 1080, // 屏幕高度
+  "clientWidth": 1920, // 网页宽度
+  "clientHeight": 1080, // 网页高度
 }
 ```
 
@@ -358,16 +372,16 @@ Performance Log 对象是记录页面性能数据的日志对象，它会呈现�
 ```javascript
 function test(browser) {
   browser
-    .url('www.shadowingszy.top')
+    .url("www.shadowingszy.top")
     .pause(3000)
-    .assert.elementPresent('#xml-test')
-    .click('#xml-test')
+    .assert.elementPresent("#xml-test")
+    .click("#xml-test")
     .pause(2000)
-    .assert.elementPresent('#get-log')
-    .click('#get-log')
+    .assert.elementPresent("#get-log")
+    .click("#get-log")
     .pause(2000)
-    .assert.elementPresent('#get-log')
-    .click('#get-log')
-    .pause(1000)
+    .assert.elementPresent("#get-log")
+    .click("#get-log")
+    .pause(1000);
 }
 ```

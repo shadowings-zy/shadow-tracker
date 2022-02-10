@@ -4,15 +4,15 @@
 
 shadow-tracker is a sensorless front-end data tracker, which provides the following functions:
 
-| number | function                                                                                      | log type           |
-| ------ | --------------------------------------------------------------------------------------------- | ------------------ |
-| 1      | Collect the click and keyboard input events when the user interacts with the web page         | Event Log          |
-| 2      | Collect error information for all JS                                                          | Error Log          |
-| 3      | Collect all XMLHttpRequest network request information                                        | XMLHttpRequest Log |
-| 4      | Collect performance data information of page loading                                          | performance log    |
-| 5      | Collect the user's device information                                                         | device log         |
-| 6      | provide time travel function, generate nightwatch E2E test code according to user's operation | N/A                |
-| 7      | support custom expansion of logs                                                              | N/A                |
+| number | function                                                                                                        | log type           |
+| ------ | --------------------------------------------------------------------------------------------------------------- | ------------------ |
+| 1      | Collect the click events, keyboard input events and url change events when the user interacts with the web page | Event Log          |
+| 2      | Collect error information for all JS                                                                            | Error Log          |
+| 3      | Collect all XMLHttpRequest network request information                                                          | XMLHttpRequest Log |
+| 4      | Collect performance data information of page loading                                                            | performance log    |
+| 5      | Collect the user's device information                                                                           | device log         |
+| 6      | provide time travel function, generate nightwatch E2E test code according to user's operation                   | N/A                |
+| 7      | support custom expansion of logs                                                                                | N/A                |
 
 Note: `performance data information of page loading` supports IE9 and above browsers, and other functions support IE7 and above browsers.
 
@@ -25,7 +25,7 @@ npm install shadow-tracker
 ```
 
 ```javascript
-import tracker from 'shadow-tracker';
+import tracker from "shadow-tracker";
 
 Tracker.Init(); // initialize tracker
 Console.Log(tracker.Getloglist()); // get log information
@@ -120,7 +120,7 @@ const option = {
   customizeErrorLog: function (error) {}, // functions to generate custom error logs, see part 5 "LogList description and custom logs"
   customizeXMLHttpRequestLog: function (event) {}, // functions to generate custom XMLHttpRequest logs, see part 5 "LogList description and custom logs"
   customizeDeviceLog: function (userAgent) {}, // functions to generate custom device logs, see part 5 "LogList description and custom logs"
-  customizePerformanceLog: function (performance) {} // functions to generate custom performance logs, see part 5 "LogList description and custom logs"
+  customizePerformanceLog: function (performance) {}, // functions to generate custom performance logs, see part 5 "LogList description and custom logs"
 };
 ```
 
@@ -177,28 +177,38 @@ By implementing the 'customizelog' method in the configuration item, we can cust
 
 #### Basic description
 
-The event log object is a log object that records user clicks and enters events. It will be displayed in the `logContent` property of the corresponding type of log object.
+The event log object is a log object that records click event, keyboard input event and url change event. It will be displayed in the `logContent` property of the corresponding type of log object.
 Event log includes two types of log: "click" and "input", respectively including the following attributes:
 
 Click event:
 
 ```javascript
 {
-"dompPath": "H1", // the DOM path of the current event
-"trackingType": "MouseDown", // event
-"offsetX": "0.5", // the relative X coordinate of the current click event. If the current page width is 700, then the X of the click event is 350
-"offsetY": "0.5" // the relative X coordinate of the current click event. If the current page width is 700, then the y of the click event is 350
+  "dompPath": "H1", // the DOM path of the current event
+  "trackingType": "MouseDown", // event
+  "offsetX": "0.5", // the relative X coordinate of the current click event. If the current page width is 700, then the X of the click event is 350
+  "offsetY": "0.5" // the relative X coordinate of the current click event. If the current page width is 700, then the y of the click event is 350
 }
 ```
 
-Enter event:
+Input event:
 
 ```javascript
 {
-'domPath': 'H1', // the DOM path of the current event
-"trackingType": "Keyup", // event
-"inputKey": "3", // the entered value
-"currentValue": "123" // the value of the current input box
+  'domPath': 'H1', // the DOM path of the current event
+  "trackingType": "Keyup", // event
+  "inputKey": "3", // the input value
+  "currentValue": "123" // the value of the current input box
+}
+```
+
+Url change event：
+
+```javascript
+{
+  "newUrl": "https://www.shadowingszy.top/#new"
+  "oldUrl": "https://www.shadowingszy.top/#old"
+  "trackingType": "urlchange"
 }
 ```
 
@@ -220,10 +230,10 @@ The error log object contains the following properties:
 
 ```javascript
 {
-"Errortype": "Customize", // the type of error, including: JS | customize | window.onerror | window.onunhandledrection
-"Errormsg": "this is error message", // error message
-"Linenumber": 0, // the number of lines in the error location
-"Columnnumber": 0 // the number of columns where the error occurred
+  "errorType": "Customize", // the type of error, including: JS | customize | window.onerror | window.onunhandledrection
+  "errorMsg": "this is error message", // error message
+  "lineNumber": 0, // the number of lines in the error location
+  "columnNumber": 0 // the number of columns where the error occurred
 }
 ```
 
@@ -255,7 +265,7 @@ Request start:
 
 ```javascript
 {
-"Event": "ajaxloadstart" // current event
+  "event": "ajaxLoadStart" // current event
 }
 ```
 
@@ -263,9 +273,9 @@ Request end:
 
 ```javascript
 {
-"Event": "ajaxloadend", // current event
-"Status": 200, // status code
-"Response": "" // return content
+  "event": "ajaxLoadEnd", // current event
+  "status": 200, // status code
+  "response": "" // return content
 }
 ```
 
@@ -286,12 +296,16 @@ The device log object is a log object that records user device information. It w
 
 ```javascript
 {
-"Browser": true, // whether it is a PC browser
-"Mobile": false, // is the mobile browser
-"Type": "computer", // the category of the current terminal, including: computer, IOS, Android, wechat, Windows Phone, unknown
-"Version": "80.0.3987.132", // version number
-"Name": "Chrome", // the category of the current browser, including: MSIE, Firefox, chrome, sarfari, Android, IOS, unknown
-"Useragent": "" // value of navigator.useragent
+  "browser": true, // whether it is a PC browser
+  "mobile": false, // is the mobile browser
+  "type": "computer", // the category of the current terminal, including: computer, IOS, Android, wechat, Windows Phone, unknown
+  "version": "80.0.3987.132", // version number
+  "name": "Chrome", // the category of the current browser, including: MSIE, Firefox, chrome, sarfari, Android, IOS, unknown
+  "userAgent": "", // value of navigator.useragent
+  "screenWidth": 1920, // screen width
+  "screenHeight": 1080, // screen height
+  "clientWidth": 1920, // client width
+  "clientHeight": 1080, // client height
 }
 ```
 
@@ -312,17 +326,17 @@ The performance log object is a log object that records page performance data. I
 
 ```javascript
 {
-"loadType": "reload",
-"Loadpagetime": 0, // the time when the page loading is completed
-"Domreadytime": 0, // time to parse DOM tree structure
-"Redirecttime": 0, // redirection time
-"Domainlookuptime": 0, // DNS query time
-"Timetofirstbyte": 0, // the time taken to read the first byte of the page, that is, the time taken by the user to get your resources
-"Requesttime": 0, // time when content loading is completed
-"Loadeventtime": 0, // the time when the onload callback function is executed
-"Cachetime": 0, // DNS cache time
-"Unloadtime": 0, // time to unload the page
-"Connecttime": 0 // the time for TCP to establish the connection and complete the handshake
+  "loadType": "reload",
+  "loadPageTime": 0, // the time when the page loading is completed
+  "domReadyTime": 0, // time to parse DOM tree structure
+  "redirectTime": 0, // redirection time
+  "domainLookupTime": 0, // DNS query time
+  "timeToFirstByte": 0, // the time taken to read the first byte of the page, that is, the time taken by the user to get your resources
+  "requestTime": 0, // time when content loading is completed
+  "loadEventTime": 0, // the time when the onload callback function is executed
+  "cacheTime": 0, // DNS cache time
+  "unloadTime": 0, // time to unload the page
+  "connectTime": 0 // the time for TCP to establish the connection and complete the handshake
 }
 ```
 

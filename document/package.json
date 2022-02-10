@@ -1,6 +1,6 @@
 {
   "name": "shadow-tracker-docs",
-  "version": "1.0.0",
+  "version": "1.0.8",
   "description": "shadow-tracker document site",
   "main": "index.js",
   "license": "MIT",

@@ -11,6 +11,8 @@
   </div>
   <div>
     <div id="xml-test">发送xmlHttpRequest</div>
+    <div id="change-history-test">更改history</div>
+    <div id="change-hash-test">更改hash</div>
     <div id="get-log">点击显示日志列表及时间旅行代码，请打开控制台查看</div>
   </div>
 
@@ -36,6 +38,20 @@
 
     document.getElementById('xml-test').onclick = function(e) {
       sendXmlHttpRequest('http://www.shadowingszy.top')
+      e.preventDefault()
+    }
+
+    document.getElementById('change-history-test').onclick = function(e) {
+      console.log('更改history');
+      history.pushState(null, null, window.location.pathname + '#/time' + Date.now())
+      setTimeout(function(){
+        history.replaceState(null, null, window.location.pathname + '#/time2' + Date.now())
+      },1000)
+      e.preventDefault()
+    }
+
+    document.getElementById('change-hash-test').onclick = function(e) {
+      window.location.hash = 'time' + Date.now()
       e.preventDefault()
     }
 
