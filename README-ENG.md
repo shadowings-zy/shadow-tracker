@@ -25,7 +25,7 @@ npm install shadow-tracker
 ```
 
 ```javascript
-import tracker from "shadow-tracker";
+import tracker from 'shadow-tracker';
 
 Tracker.Init(); // initialize tracker
 Console.Log(tracker.Getloglist()); // get log information
@@ -120,7 +120,7 @@ const option = {
   customizeErrorLog: function (error) {}, // functions to generate custom error logs, see part 5 "LogList description and custom logs"
   customizeXMLHttpRequestLog: function (event) {}, // functions to generate custom XMLHttpRequest logs, see part 5 "LogList description and custom logs"
   customizeDeviceLog: function (userAgent) {}, // functions to generate custom device logs, see part 5 "LogList description and custom logs"
-  customizePerformanceLog: function (performance) {}, // functions to generate custom performance logs, see part 5 "LogList description and custom logs"
+  customizePerformanceLog: function (performance) {} // functions to generate custom performance logs, see part 5 "LogList description and custom logs"
 };
 ```
 
@@ -232,8 +232,6 @@ The error log object contains the following properties:
 {
   "errorType": "Customize", // the type of error, including: JS | customize | window.onerror | window.onunhandledrection
   "errorMsg": "this is error message", // error message
-  "lineNumber": 0, // the number of lines in the error location
-  "columnNumber": 0 // the number of columns where the error occurred
 }
 ```
 
@@ -259,34 +257,23 @@ By implementing the `customizeErrorLog()` method in the configuration item, we c
 #### Basic description
 
 XMLHttpRequest log object is a log object that records XMLHttpRequest. It will be displayed in the `logContent` attribute of the corresponding type of log object.
-XMLHttpRequest log contains two types of log: "request start" and "request end", respectively including the following attributes:
+It can also capture log of `fetch API`
 
-Request start:
-
-```javascript
-{
-  "event": "ajaxLoadStart" // current event
-}
-```
-
-Request end:
+Log content:
 
 ```javascript
 {
+  "duration": 10, // request duration
   "event": "ajaxLoadEnd", // current event
   "status": 200, // status code
-  "response": "" // return content
+  "response": "", // return content
+  "url": "xxx" // request url
 }
 ```
 
 #### customize description
 
-By implementing the `customizeXMLHttpRequestlog()` method in the configuration item, we can customize the log object and use the return value of the `customizeXMLHttpRequestlog()` function as the value of the `custom.detail` attribute in the log object.
-
-`customizeXMLHttpRequestlog()` method parameter description:
-|parameter name | parameter type | parameter description
-| - | - | - |
-|event | object | event triggering 'ajaxloadstart' or 'ajaxloadend'
+This kind of log not support customize.
 
 ### Device log object description
 
@@ -365,18 +352,18 @@ We can set parameters in the tacker configuration item.
 Generate code examples:
 
 ```javascript
-Function test (browser) {
-  Browser
-    .url ('www.shadowingszy.top')
-    .pause (3000)
-    .assert.elementPresent ('#xml-test')
-    .click ('#xml-test')
-    .pause (2000)
-    .assert.elementPresent ('#get-log')
-    .click ('#get-log')
-    .pause (2000)
-    .assert.elementPresent ('#get-log')
-    .click ('#get-log')
-    .pause (1000)
+function test(browser) {
+  browser
+    .url('www.shadowingszy.top')
+    .pause(3000)
+    .assert.elementPresent('#xml-test')
+    .click('#xml-test')
+    .pause(2000)
+    .assert.elementPresent('#get-log')
+    .click('#get-log')
+    .pause(2000)
+    .assert.elementPresent('#get-log')
+    .click('#get-log')
+    .pause(1000);
 }
 ```
