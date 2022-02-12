@@ -28,7 +28,7 @@ npm install shadow-tracker
 // 使用import引入tracker即可访问tracker的API
 // 这里只呈现了“初始化tracker”以及“获取日志信息”的代码，其他API使用请参照第三部分“API说明”
 
-import tracker from "shadow-tracker";
+import tracker from 'shadow-tracker';
 
 tracker.init(); // 初始化tracker
 console.log(tracker.getLogList()); // 获取日志信息
@@ -126,7 +126,7 @@ const option = {
   customizeErrorLog: function (error) {}, // 生成自定义error log的函数，详见第五部分“logList 说明及自定义 Log”
   customizeXMLHttpRequestLog: function (event) {}, // 生成自定义XMLHttpRequest log的函数，详见第五部分“logList 说明及自定义 Log”
   customizeDeviceLog: function (userAgent) {}, // 生成自定义device log的函数，详见第五部分“logList 说明及自定义 Log”
-  customizePerformanceLog: function (performance) {}, // 生成自定义performance log的函数，详见第五部分“logList 说明及自定义 Log”
+  customizePerformanceLog: function (performance) {} // 生成自定义performance log的函数，详见第五部分“logList 说明及自定义 Log”
 };
 ```
 
@@ -237,8 +237,6 @@ Error Log 对象包含如下属性：
 {
   "errorType": "customize", // error的类型，包含：js | customize | window.onerror | window.onunhandledrejection 四种
   "errorMsg": "This is error message", // 报错信息
-  "lineNumber": 0, // 出错位置所在行数
-  "columnNumber": 0 // 出错位置所在列数
 }
 ```
 
@@ -264,34 +262,22 @@ Error Log 对象包含如下属性：
 #### 基础说明
 
 XMLHttPRequest Log 对象是记录 XMLHttpRequest 的日志对象，它会呈现在对应种类的 Log 对象的`logContent`属性中。
-XMLHttPRequest Log 包含“请求开始”和“请求结束”两种日志类型，分别包含如下属性：
+另外，它也能收集`fetch API`的日志。
 
-请求开始：
-
-```javascript
-{
-  "event": "ajaxLoadStart" // 当前事件
-}
-```
-
-请求结束：
+具体内容如下：
 
 ```javascript
 {
-  "event": "ajaxLoadEnd", // 当前事件
+  "duration": 10, // 请求耗时
+  "event": "XMLHttpRequest", // 请求类型
+  "response": 10, // 返回内容
   "status": 200, // 状态码
-  "response": "" // 返回内容
-}
+  "url": "xxx" // 请求url
 ```
 
 #### 自定义说明
 
-通过实现配置项中的`customizeXMLHttpRequestLog`方法，我们可以自定义日志对象，并将`customizeXMLHttpRequestLog`函数的返回值作为 Log 对象中`custom.detail`属性的值。
-
-`customizeXMLHttpRequestLog`方法参数说明:
-| 参数名 | 参数类型 | 参数说明
-| - | - | - |
-| event | object | 触发`ajaxLoadStart`或`ajaxLoadEnd`的事件
+此日志暂不支持自定义。
 
 ### Device Log 对象说明
 
@@ -372,16 +358,16 @@ Performance Log 对象是记录页面性能数据的日志对象，它会呈现�
 ```javascript
 function test(browser) {
   browser
-    .url("www.shadowingszy.top")
+    .url('www.shadowingszy.top')
     .pause(3000)
-    .assert.elementPresent("#xml-test")
-    .click("#xml-test")
+    .assert.elementPresent('#xml-test')
+    .click('#xml-test')
     .pause(2000)
-    .assert.elementPresent("#get-log")
-    .click("#get-log")
+    .assert.elementPresent('#get-log')
+    .click('#get-log')
     .pause(2000)
-    .assert.elementPresent("#get-log")
-    .click("#get-log")
+    .assert.elementPresent('#get-log')
+    .click('#get-log')
     .pause(1000);
 }
 ```
