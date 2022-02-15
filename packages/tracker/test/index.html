@@ -20,7 +20,11 @@
   <script src="./shadow-tracker-test.js"></script>
 
   <script>
-    window.tracker.init();
+    const userId = Math.floor(Math.random() * 1000)
+    window.tracker.init({
+      sessionId: `${Date.now()}${userId}`,
+      userId: userId
+    });
 
     console.error('this is error test');
 

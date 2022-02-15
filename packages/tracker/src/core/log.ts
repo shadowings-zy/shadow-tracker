@@ -24,6 +24,7 @@ export class TrackerLog {
   logType: LOG_TYPE;
   logContent: any;
   logSession: string;
+  logUser: string;
   custom: ICustomLog | undefined;
 
   constructor(
@@ -37,6 +38,7 @@ export class TrackerLog {
     this.logType = logType;
     this.logContent = logContent;
     this.logSession = options.sessionId;
+    this.logUser = options.userId;
     if (options.custom) {
       this.custom = {
         log: options.customizeLog(logType, logContent),

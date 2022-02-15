@@ -106,6 +106,7 @@ When initialize tracker, a configuration object can be passed in to enrich the f
 //This is the default configuration item for shadow-tracker, let's take this example
 const option = {
   sessionId: `${Date.now()}${Math.floor(Math.random() * 1000)}`, // sessionId, default is current timestamp and random number
+  userId: `${Date.now()}${Math.floor(Math.random() * 1000)}`, // userId, default is current timestamp and random number
   useClass: false, // whether to use class as the unique ID of the element
   maxResponseTextLength: 1000, // maximum length of XMLHttpRequest return value
   timeTracelInitTime: 3000, // wait time for initialization page in generated time travel code
@@ -142,6 +143,7 @@ The log object is the basic log object, which contains the following properties:
   "logtime": 1584262658187, // log generation time
   "url": "www.shadowingszy.top", // the URL that generates the log page
   "logSession": "xxx", // sessionId
+  "logUser": "xxx", // userId
   "logType": "Error Log", // the types of logs, including: event log | error log | XMLHttpRequest log | device log | performance log
   "logContent": {} // specific log information
 }
@@ -156,6 +158,7 @@ The custom log object contains the following properties:
   "logtime": 1584262658187, // log generation time
   "url": "www.shadowingszy.top", // the URL that generates the log page
   "logSession": "xxx", // sessionId
+  "logUser": "xxx", // userId
   "logtype": "error log", // the types of logs, including: event log | error log | XMLHttpRequest log | device log | performance log
   "logcontent": {} // specific log information
   "custom": {// custom log fields

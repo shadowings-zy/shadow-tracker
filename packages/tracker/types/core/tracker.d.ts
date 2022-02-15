@@ -5,6 +5,7 @@
 import { TrackerLog } from './log';
 export interface ITrackerOptions {
     sessionId?: string;
+    userId?: string;
     useClass?: boolean;
     maxResponseTextLength?: number;
     timeTracelInitTime?: number;
@@ -26,6 +27,7 @@ export declare class Tracker {
     trackerOptions: ITrackerOptions;
     logList: TrackerLog[];
     sessionId: string;
+    userId: string;
     constructor();
     init(options?: ITrackerOptions): Tracker;
     getDeviceInfo(insertIntoLogList?: boolean): TrackerLog;

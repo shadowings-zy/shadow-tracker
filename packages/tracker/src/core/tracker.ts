@@ -13,6 +13,7 @@ import { captureFetch, captureXMLHttpRequest } from '../handler/request';
 
 export interface ITrackerOptions {
   sessionId?: string;
+  userId?: string;
   useClass?: boolean;
   maxResponseTextLength?: number;
   timeTracelInitTime?: number;
@@ -32,6 +33,7 @@ export interface ITrackerOptions {
 
 const DEFAULT_OPTIONS: ITrackerOptions = {
   sessionId: `${Date.now()}${Math.floor(Math.random() * 1000)}`,
+  userId: `${Date.now()}${Math.floor(Math.random() * 1000)}`,
   useClass: false,
   maxResponseTextLength: 1000,
   timeTracelInitTime: 3000,
@@ -54,17 +56,20 @@ export class Tracker {
   trackerOptions: ITrackerOptions; // tracker的设置
   logList: TrackerLog[]; // 日志列表
   sessionId: string; // 日志sessionId
+  userId: string; // 日志userId
 
   constructor() {
     this.trackerInitialized = false;
     this.trackerOptions = DEFAULT_OPTIONS;
     this.logList = [];
     this.sessionId = '';
+    this.userId = '';
   }
 
   init(options: ITrackerOptions = {}): Tracker {
     this.trackerOptions = Object.assign(DEFAULT_OPTIONS, options);
     this.sessionId = this.trackerOptions.sessionId;
+    this.userId = this.trackerOptions.userId;
 
     if (!this.trackerInitialized) {
       if (this.trackerOptions.captureEvent) {

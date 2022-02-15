@@ -20,6 +20,7 @@ export declare class TrackerLog {
     logType: LOG_TYPE;
     logContent: any;
     logSession: string;
+    logUser: string;
     custom: ICustomLog | undefined;
     constructor(options: ITrackerOptions, logType: LOG_TYPE, logContent: any, customizeDetailData?: any);
 }
