@@ -1,4 +1,4 @@
-import { getBoundingClientRect, getDomPath } from './domUtils';
+import { getBoundingClientRect, getDomPath } from './dom';
 
 /**
  * 处理DOM节点，生成此节点的唯一路径

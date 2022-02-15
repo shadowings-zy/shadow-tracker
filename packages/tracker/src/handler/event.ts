@@ -5,7 +5,7 @@
 
 import { LOG_TYPE, TrackerLog } from '../core/log';
 import { Tracker } from '../core/tracker';
-import { handleDomPathTrack, handleInputTrack, handlePositionTrack } from '../utils/eventUtils';
+import { handleDomPathTrack, handleInputTrack, handlePositionTrack } from '../util/event';
 
 let oldUrl: string = '';
 
