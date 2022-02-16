@@ -1,22 +1,22 @@
 {
   "name": "shadow-tracker-analyzer",
-  "version": "2.0.2",
+  "version": "1.0.1",
   "description": "Analyzer for logs captured by shadow-tracker",
   "repository": "shadowings-zy/shadow-tracker",
   "license": "MIT",
-  "main": "dist/shadow-tracker.cjs.js",
+  "main": "dist/analyzer.js",
   "files": [
     "dist",
     "types",
-    "../../README-EN.md",
-    "../../README.md"
+    "README.md"
   ],
-  "types": "types/index.d.ts",
+  "types": "types/analyzer.d.ts",
   "keywords": [
     "monitor-analyzer"
   ],
   "author": "shadowings-zy",
   "scripts": {
-    "build": "tsc"
+    "build": "npm run clean && tsc",
+    "clean": "rm -rf ./dist && rm -rf ./types"
   }
 }

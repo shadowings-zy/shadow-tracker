@@ -13,8 +13,9 @@ shadow-tracker is a sensorless front-end data tracker, which provides the follow
 | 5      | Collect the user's device information                                                                           | device log         |
 | 6      | provide time travel function, generate nightwatch E2E test code according to user's operation                   | N/A                |
 | 7      | support custom expansion of logs                                                                                | N/A                |
+| 8      | provide log analysis tools                                                                                      | N/A                |
 
-Note: `performance data information of page loading` supports IE9 and above browsers, and other functions support IE7 and above browsers.
+Note: `performance data information of page loading` need browser support `performance API`, and other functions support IE7 and above browsers.
 
 ## quick start
 
@@ -368,5 +369,123 @@ function test(browser) {
     .assert.elementPresent('#get-log')
     .click('#get-log')
     .pause(1000);
+}
+```
+
+## shadow-tracker-analyzer introduction
+
+### import through NPM
+
+```bash
+npm install shadow-tracker-analyzer
+```
+
+```javascript
+import { ShadowTrackerAnalyzer } from 'shadow-tracker-analyzer';
+
+const logList = []; // log list upload by shadow-tracker
+
+const analyzer = new ShadowTrackerAnalyzer({
+  maxLogListLength: 50000,
+  jumpOutTimeLimit: 30 * 1000
+});
+
+analyzer.addLog(logList); // add log to analyzer
+
+const overview = analyzer.getOverview(); // get data overview
+const urlStatisticInfo = analyzer.getUrlStatisticInfo(); // get url statistic information
+const deviceInfo = analyzer.getDeviceInfo(); // get device information
+const performanceInfo = analyzer.getPerformanceInfo(); // get performance information
+```
+
+### Options
+
+When initialize analyzer, a configuration object can be passed in to enrich the functionality of the analyzer.
+
+```javascript
+const option = {
+  maxLogListLength: 50000, // max log list count
+  jumpOutTimeLimit: 30 * 1000 // jump out time limit, for jump out rate
+};
+```
+
+### API
+
+#### getOverview()
+
+get data overview
+
+return value:
+
+```javascript
+{
+  pv: 85, // pv
+  uv: 10, // uv
+  jumpOutRate: 0.27058823529411763, // jump out rate
+  averageVisitTime: 6885017 // averate visit time
+}
+```
+
+#### getUrlStatisticInfo()
+
+get url statistic
+
+return value：
+
+```javascript
+[
+  {
+    url: 'https://a.com/b', // visit url
+    visitNumber: 61 // visit number
+  },
+  {
+    url: 'https://a.com/c',
+    visitNumber: 54
+  }
+];
+```
+
+#### getDeviceInfo()
+
+get device information
+
+return value：
+
+```javascript
+{
+  screenInfo: [ // screen information
+    { info: '1280x800', number: 10 },
+    { info: '1920x1080', number: 35 }
+  ],
+  clientInfo: [ // client(window) information
+    { info: '980x1708', number: 1 },
+    { info: '1024x640', number: 1 }
+  ],
+  browserInfo: [ // browser information
+    { info: 'iphone(ios)', number: 1 },
+    { info: 'firefox(computer)', number: 4 },
+    { info: 'chrome(computer)', number: 86 }
+  ]
+}
+```
+
+#### getPerformanceInfo()
+
+get performance information
+
+返回值：
+
+```javascript
+{
+  cacheTime: 8090, // DNS cache time
+  connectTime: 18431, // the time for TCP to establish the connection and complete the handshake
+  domReadyTime: 59322, // time to parse DOM tree structure
+  domainLookupTime: 13384, // DNS query time
+  loadEventTime: 32, // 执行 onload 回调函数的时间
+  loadPageTime: 77772, // the time when the onload callback function is executed
+  redirectTime: 202, // redirection time
+  requestTime: 17151, // time when content loading is completed
+  timeToFirstByte: 63315, // the time taken to read the first byte of the page, that is, the time taken by the user to get your resources
+  unloadTime: 0 // time to unload the page
 }
 ```

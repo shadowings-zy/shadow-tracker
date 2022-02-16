@@ -1,37 +1,37 @@
-import { TrackerLog } from '../../tracker/src/core/log';
 interface IAnalyzerOptions {
     maxLogListLength?: number;
     jumpOutTimeLimit?: number;
 }
+export interface Log {
+    logTime: number;
+    url: string;
+    logType: string;
+    logContent: any;
+    logSession: string;
+    logUser: string;
+    custom?: {
+        log: any;
+        detail: any;
+    };
+}
 export declare class ShadowTrackerAnalyzer {
     analyzerOptions: IAnalyzerOptions;
-    sortedLogList: TrackerLog[];
-    sessionMap: Map<string, TrackerLog[]>;
-    userMap: Map<string, TrackerLog[]>;
+    sortedLogList: Log[];
+    sessionMap: Map<string, Log[]>;
+    userMap: Map<string, Log[]>;
     constructor(options: IAnalyzerOptions);
-    addLog(inputLog: TrackerLog | TrackerLog[]): void;
+    addLog(inputLog: Log | Log[]): void;
     getOverview(): {
         pv: number;
         uv: number;
         jumpOutRate: number;
         averageVisitTime: number;
     };
-    getUrlStatisticInfo(): {
-        url: string;
-        visitNumber: number;
-        userActionNumber: number;
-    }[];
+    getUrlStatisticInfo(): any[];
     getDeviceInfo(): {
-        screenInfo: {
-            '1920x1080': number;
-        };
-        clientInfo: {
-            '1920x1080': number;
-        };
-        browserInfo: {
-            'chrome-computer': number;
-            'uc-mobile': number;
-        };
+        screenInfo: any[];
+        clientInfo: any[];
+        browserInfo: any[];
     };
     getPerformanceInfo(): {
         cacheTime: number;

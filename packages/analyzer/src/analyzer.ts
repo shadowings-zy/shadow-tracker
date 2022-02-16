@@ -1,4 +1,3 @@
-import { TrackerLog } from '../../tracker/src/core/log';
 import { getSessionMap, getUserMap, mapToArray } from './util/common';
 import { handleDeviceInfo } from './util/device';
 import { handleOverviewInfo } from './util/overview';
@@ -15,20 +14,33 @@ interface IAnalyzerOptions {
   jumpOutTimeLimit?: number;
 }
 
+export interface Log {
+  logTime: number;
+  url: string;
+  logType: string;
+  logContent: any;
+  logSession: string;
+  logUser: string;
+  custom?: {
+    log: any;
+    detail: any;
+  };
+}
+
 export class ShadowTrackerAnalyzer {
   analyzerOptions: IAnalyzerOptions;
-  sortedLogList: TrackerLog[];
-  sessionMap: Map<string, TrackerLog[]>;
-  userMap: Map<string, TrackerLog[]>;
+  sortedLogList: Log[];
+  sessionMap: Map<string, Log[]>;
+  userMap: Map<string, Log[]>;
 
   constructor(options: IAnalyzerOptions) {
     this.analyzerOptions = Object.assign(DEFAULT_ANALYZER_OPTIONS, options);
     this.sortedLogList = [];
-    this.sessionMap = new Map<string, TrackerLog[]>();
-    this.userMap = new Map<string, TrackerLog[]>();
+    this.sessionMap = new Map<string, Log[]>();
+    this.userMap = new Map<string, Log[]>();
   }
 
-  addLog(inputLog: TrackerLog | TrackerLog[]) {
+  addLog(inputLog: Log | Log[]) {
     const currentLength = this.sortedLogList.length;
     if (Array.isArray(inputLog)) {
       if (currentLength + inputLog.length > this.analyzerOptions.maxLogListLength) {

@@ -1,7 +1,7 @@
-import { TrackerLog } from '../../../tracker/src/core/log';
+import { Log } from '../analyzer';
 import { addCount } from './common';
 
-export const handleUrlStatisticInfo = (sessionMap: Map<string, TrackerLog[]>) => {
+export const handleUrlStatisticInfo = (sessionMap: Map<string, Log[]>) => {
   let urlMap = new Map<string, number>();
   sessionMap.forEach((logList) => {
     const sessionUrlChangeLog = logList.filter(

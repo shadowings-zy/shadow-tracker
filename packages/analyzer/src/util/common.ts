@@ -1,7 +1,7 @@
-import { TrackerLog } from '../../../tracker/src/core/log';
+import { Log } from "../analyzer";
 
-export const getSessionMap = (logList: TrackerLog[]) => {
-  const sessionMap = new Map<string, TrackerLog[]>();
+export const getSessionMap = (logList: Log[]) => {
+  const sessionMap = new Map<string, Log[]>();
 
   for (const log of logList) {
     if (log.logSession !== undefined) {
@@ -18,8 +18,8 @@ export const getSessionMap = (logList: TrackerLog[]) => {
   return sessionMap;
 };
 
-export const getUserMap = (logList: TrackerLog[]) => {
-  const userMap = new Map<string, TrackerLog[]>();
+export const getUserMap = (logList: Log[]) => {
+  const userMap = new Map<string, Log[]>();
 
   for (const log of logList) {
     if (log.logUser !== undefined) {

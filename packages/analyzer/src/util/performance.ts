@@ -1,6 +1,6 @@
-import { TrackerLog } from '../../../tracker/src/core/log';
+import { Log } from "../analyzer";
 
-export const handlePerformanceInfo = (sessionMap: Map<string, TrackerLog[]>) => {
+export const handlePerformanceInfo = (sessionMap: Map<string, Log[]>) => {
   const output = {
     cacheTime: 0,
     connectTime: 0,

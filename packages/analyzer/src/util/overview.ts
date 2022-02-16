@@ -1,8 +1,8 @@
-import { TrackerLog } from '../../../tracker/src/core/log';
+import { Log } from "../analyzer";
 
 export const handleOverviewInfo = (
-  sessionMap: Map<string, TrackerLog[]>,
-  userMap: Map<string, TrackerLog[]>,
+  sessionMap: Map<string, Log[]>,
+  userMap: Map<string, Log[]>,
   jumpOutTimeLimit = 30 * 1000
 ) => {
   // 跳出率和平均访问计算

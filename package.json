@@ -1,12 +1,13 @@
 {
   "name": "shadow-tracker",
-  "version": "2.0.2",
+  "version": "1.0.0",
   "description": "A user experience management framework for monitoring front-end data",
   "repository": "shadowings-zy/shadow-tracker",
   "license": "MIT",
   "author": "shadowings-zy",
   "private": true,
   "scripts": {
+    "analyzer:build": "cd ./packages/analyzer && npm run build",
     "document:build": "npm run document:update && cd ./document && npm run build",
     "document:start": "npm run document:update && cd ./document && npm run start",
     "document:update": "cp -rf ./README-EN.md ./document/markdown/en/document.md && cp -rf ./README.md ./document/markdown/document.md",

@@ -1,7 +1,7 @@
-import { TrackerLog } from '../../../tracker/src/core/log';
+import { Log } from '../analyzer';
 import { addCount } from './common';
 
-export const handleDeviceInfo = (sessionMap: Map<string, TrackerLog[]>) => {
+export const handleDeviceInfo = (sessionMap: Map<string, Log[]>) => {
   let screenMap = new Map<string, number>();
   let clientMap = new Map<string, number>();
   let browserMap = new Map<string, number>();
