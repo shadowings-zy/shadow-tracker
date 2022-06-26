@@ -105,6 +105,16 @@ console.log(tracker.getLogList());
 console.log(tracker.getTimeTravelCode());
 ```
 
+### addCustomLog(key, value)
+
+添加自定义日志，添加的日志对象的`logType`为`Custom Log`
+
+使用样例：
+
+```javascript
+tracker.addCustomLog(key, value);
+```
+
 ## 配置项说明
 
 在初始化 tracker 时，可传入配置项来丰富 tracker 的功能。
@@ -132,7 +142,7 @@ const option = {
 };
 ```
 
-## logList 说明及自定义 Log
+## logList 说明及自定义 Log 对象
 
 logList 是存储全部日志的 js 数组，我们可以使用`getLogList()`来获取到这个数组，并针对自己的业务需求进一步开发日志上报、日志储存等逻辑。
 另外，我们还可以根据自己的业务需求，对日志对象进行拓展。
@@ -151,12 +161,13 @@ Log 对象是基础的日志对象，它包含如下属性：
   "url": "www.shadowingszy.top", // 产生日志页面的url
   "logSession": "xxx", // sessionId
   "logUser": "xxx", // userId
-  "logType": "Error Log", // 日志的种类，包含：Event Log | Error Log | XMLHttPRequest Log | Device Log | Performance Log 五种
+  "logKey": "xxx", // 日志的key，用于筛选在自定义日志中筛选目标日志
+  "logType": "Error Log", // 日志的种类，包含：Event Log | Error Log | XMLHttPRequest Log | Device Log | Performance Log | Custom Log 六种
   "logContent": {} // 日志的具体信息
 }
 ```
 
-#### 自定义说明
+#### Log 对象自定义说明
 
 自定义 Log 对象包含如下属性：
 
@@ -166,7 +177,7 @@ Log 对象是基础的日志对象，它包含如下属性：
   "url": "www.shadowingszy.top", // 产生日志页面的url
   "logSession": "xxx", // sessionId
   "logUser": "xxx", // userId
-  "logType": "Error Log", // 日志的种类，包含：Event Log | Error Log | XMLHttPRequest Log | Device Log | Performance Log 五种
+  "logType": "Error Log", // 日志的种类，包含：Event Log | Error Log | XMLHttPRequest Log | Device Log | Performance Log | Custom Log 六种
   "logContent": {} // 日志的具体信息
   "custom":{ // 自定义日志字段
     "log": {}, // 执行配置项中的customizeLog()方法后返回的值
@@ -180,7 +191,7 @@ Log 对象是基础的日志对象，它包含如下属性：
 `customizeLog`方法参数说明:
 | 参数名 | 参数类型 | 参数说明
 | - | - | - |
-| logType | string | 日志的种类，包含：`Event Log | Error Log | XMLHttpRequest Log | Device Log | Performance Log` 五种
+| logType | string | 日志的种类，包含：`Event Log | Error Log | XMLHttpRequest Log | Device Log | Performance Log | Custom Log` 六种
 | logContent | object | 日志具体信息，即 Log 对象中的`logContent`属性的值
 
 ### Event Log 对象说明
@@ -222,7 +233,7 @@ url 变更事件：
 }
 ```
 
-#### 自定义说明
+#### Log 对象自定义说明
 
 通过实现配置项中的`customizeEventLog`方法，我们可以自定义日志对象，并将`customizeEventLog`函数的返回值作为 Log 对象中`custom.detail`属性的值。
 
@@ -253,7 +264,7 @@ Error Log 对象包含如下属性：
 | window.onerror | window.onerror 回调报错 |
 | window.onunhandledrejection | window.onunhandledrejection 回调报错 |
 
-#### 自定义说明
+#### Log 对象自定义说明
 
 通过实现配置项中的`customizeErrorLog`方法，我们可以自定义日志对象，并将`customizeErrorLog`函数的返回值作为 Log 对象中`custom.detail`属性的值。
 
@@ -278,9 +289,10 @@ XMLHttPRequest Log 对象是记录 XMLHttpRequest 的日志对象，它会呈现
   "response": 10, // 返回内容
   "status": 200, // 状态码
   "url": "xxx" // 请求url
+}
 ```
 
-#### 自定义说明
+#### Log 对象自定义说明
 
 此日志暂不支持自定义。
 
@@ -305,7 +317,7 @@ Device Log 对象是记录用户设备信息的日志对象，它会呈现在对
 }
 ```
 
-#### 自定义说明
+#### Log 对象自定义说明
 
 通过实现配置项中的`customizeDeviceLog`方法，我们可以自定义日志对象，并将`customizeDeviceLog`函数的返回值作为 Log 对象中`custom.detail`属性的值。
 
@@ -338,7 +350,7 @@ Performance Log 对象是记录页面性能数据的日志对象，它会呈现�
 
 注：Performance Log 对象使用`window.performance`来记录页面性能数据，因此只支持 IE9 及以上浏览器
 
-#### 自定义说明
+#### Log 对象自定义说明
 
 通过实现配置项中的`customizePerformanceLog`方法，我们可以自定义日志对象，并将`customizePerformanceLog`函数的返回值作为 Log 对象中`custom.detail`属性的值。
 
@@ -481,17 +493,49 @@ const option = {
 
 返回值：
 
+```javscript
+{
+  "cacheTime": 8090, // DNS 缓存时间
+  "connectTime": 18431, // TCP 建立连接完成握手的时间
+  "domReadyTime": 59322, // 解析 DOM 树结构的时间
+  "domainLookupTime": 13384, // DNS 查询时间
+  "loadEventTime": 32, // 执行 onload 回调函数的时间
+  "loadPageTime": 77772, // 页面加载完成的时间
+  "redirectTime": 202, // 重定向的时间
+  "requestTime": 17151, // 内容加载完成的时间
+  "timeToFirstByte": 63315, // 读取页面第一个字节的时间，即用户拿到你的资源占用的时间
+  "unloadTime": 0 // 卸载页面的时间
+}
+```
+
+#### getCustomLogByKeys(keys)
+
+根据 Log 对象中 logKey 字段的值来获取对应的日志
+
+返回值：
+
 ```javascript
 {
-  cacheTime: 8090, // DNS 缓存时间
-  connectTime: 18431, // TCP 建立连接完成握手的时间
-  domReadyTime: 59322, // 解析 DOM 树结构的时间
-  domainLookupTime: 13384, // DNS 查询时间
-  loadEventTime: 32, // 执行 onload 回调函数的时间
-  loadPageTime: 77772, // 页面加载完成的时间
-  redirectTime: 202, // 重定向的时间
-  requestTime: 17151, // 内容加载完成的时间
-  timeToFirstByte: 63315, // 读取页面第一个字节的时间，即用户拿到你的资源占用的时间
-  unloadTime: 0 // 卸载页面的时间
+  "key1": [
+    {
+      "logTime": 1584262658187,
+      "url": "xxx",
+      "logSession": "xxx",
+      "logUser": "xxx",
+      "logKey": "key1",
+      "logType": "Custom Log",
+      "logContent": {}
+    },
+    {
+      "logTime": 1584262658187,
+      "url": "xxx",
+      "logSession": "xxx",
+      "logUser": "xxx",
+      "logKey": "key1",
+      "logType": "Custom Log",
+      "logContent": {}
+    }
+  ],
+  "key2": []
 }
 ```

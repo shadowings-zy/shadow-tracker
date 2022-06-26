@@ -6,6 +6,7 @@ export interface Log {
     logTime: number;
     url: string;
     logType: string;
+    logKey: string;
     logContent: any;
     logSession: string;
     logUser: string;
@@ -45,5 +46,6 @@ export declare class ShadowTrackerAnalyzer {
         timeToFirstByte: number;
         unloadTime: number;
     };
+    getCustomLogByKeys(keys: string[]): {};
 }
 export {};

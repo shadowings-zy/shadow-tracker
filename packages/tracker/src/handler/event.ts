@@ -3,7 +3,7 @@
  * @author shadowingszy
  */
 
-import { LOG_TYPE, TrackerLog } from '../core/log';
+import { LOG_KEY, LOG_TYPE, TrackerLog } from '../core/log';
 import { Tracker } from '../core/tracker';
 import { handleDomPathTrack, handleInputTrack, handlePositionTrack } from '../util/event';
 
@@ -30,6 +30,7 @@ function captureDomEvent(tracker: Tracker) {
       const log = new TrackerLog(
         tracker.trackerOptions,
         LOG_TYPE.EVENT,
+        LOG_KEY.EVENT,
         eventLog,
         tracker.trackerOptions.customizeEventLog(event)
       );
@@ -50,6 +51,7 @@ function captureDomEvent(tracker: Tracker) {
       const log = new TrackerLog(
         tracker.trackerOptions,
         LOG_TYPE.EVENT,
+        LOG_KEY.EVENT,
         eventLog,
         tracker.trackerOptions.customizeEventLog(event)
       );
@@ -83,6 +85,7 @@ function captureUrlHashEvent(tracker: Tracker) {
       const log = new TrackerLog(
         tracker.trackerOptions,
         LOG_TYPE.EVENT,
+        LOG_KEY.EVENT,
         eventLog,
         tracker.trackerOptions.customizeEventLog(event)
       );
@@ -117,6 +120,7 @@ function captureUrlHistoryEvent(tracker: Tracker) {
       const log = new TrackerLog(
         tracker.trackerOptions,
         LOG_TYPE.EVENT,
+        LOG_KEY.EVENT,
         eventLog,
         tracker.trackerOptions.customizeEventLog(event)
       );
@@ -146,7 +150,7 @@ function captureUrlHistoryEvent(tracker: Tracker) {
 
       oldUrl = window.location.href;
 
-      const log = new TrackerLog(tracker.trackerOptions, LOG_TYPE.EVENT, eventLog);
+      const log = new TrackerLog(tracker.trackerOptions, LOG_TYPE.EVENT, LOG_KEY.EVENT, eventLog);
       tracker.logList.push(log);
 
       console.debug('execute pushstate function log:\n', log);
@@ -172,7 +176,7 @@ function captureUrlHistoryEvent(tracker: Tracker) {
 
       oldUrl = window.location.href;
 
-      const log = new TrackerLog(tracker.trackerOptions, LOG_TYPE.EVENT, eventLog);
+      const log = new TrackerLog(tracker.trackerOptions, LOG_TYPE.EVENT, LOG_KEY.EVENT, eventLog);
       tracker.logList.push(log);
 
       console.debug('execute replaceState function log:\n', log);

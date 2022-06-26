@@ -5,7 +5,7 @@
  * 使用performance API进行页面数据监控
  */
 
-import { LOG_TYPE, TrackerLog } from '../core/log';
+import { LOG_KEY, LOG_TYPE, TrackerLog } from '../core/log';
 import { ITrackerOptions } from '../core/tracker';
 
 export interface IPerformanceData {
@@ -28,6 +28,7 @@ export function capturePerformance(trackerOptions: ITrackerOptions): TrackerLog 
     const performanceLog = new TrackerLog(
       trackerOptions,
       LOG_TYPE.PERFORMANCE,
+      LOG_KEY.PERFORMANCE,
       performanceData,
       trackerOptions.customizePerformanceLog(window.performance)
     );

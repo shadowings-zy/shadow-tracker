@@ -1,4 +1,4 @@
-import { Log } from "../analyzer";
+import { Log } from '../analyzer';
 
 export const handlePerformanceInfo = (sessionMap: Map<string, Log[]>) => {
   const output = {

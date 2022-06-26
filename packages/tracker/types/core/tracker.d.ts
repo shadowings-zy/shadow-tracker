@@ -36,5 +36,6 @@ export declare class Tracker {
     getTracker(): Tracker;
     getLogList(): TrackerLog[];
     addLog(log: TrackerLog): void;
+    addCustomLog(key: string, content: any): void;
     setLogList(logList: TrackerLog[]): void;
 }

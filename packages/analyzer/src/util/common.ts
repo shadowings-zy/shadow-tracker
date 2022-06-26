@@ -1,4 +1,4 @@
-import { Log } from "../analyzer";
+import { Log } from '../analyzer';
 
 export const getSessionMap = (logList: Log[]) => {
   const sessionMap = new Map<string, Log[]>();
@@ -54,5 +54,5 @@ export const mapToArray = (map: Map<string, number>, keyName: string, valueName:
       [valueName]: value
     });
   });
-  return output
+  return output;
 };

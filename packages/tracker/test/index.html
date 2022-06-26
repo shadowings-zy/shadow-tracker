@@ -14,13 +14,14 @@
     <div id="fetch-test">发送fetch</div>
     <div id="change-history-test">更改history</div>
     <div id="change-hash-test">更改hash</div>
+    <div id="custom-log-test">发送自定义日志</div>
     <div id="get-log">点击显示日志列表及时间旅行代码，请打开控制台查看</div>
   </div>
 
   <script src="./shadow-tracker-test.js"></script>
 
   <script>
-    const userId = Math.floor(Math.random() * 1000)
+    const userId = Math.floor(Math.random() * 1000);
     window.tracker.init({
       sessionId: `${Date.now()}${userId}`,
       userId: userId
@@ -65,6 +66,10 @@
     document.getElementById('change-hash-test').onclick = function (e) {
       window.location.hash = 'time' + Date.now();
       e.preventDefault();
+    };
+
+    document.getElementById('custom-log-test').onclick = function (e) {
+      window.tracker.addCustomLog('test', 'i am custom log');
     };
 
     function sendXmlHttpRequest(url) {

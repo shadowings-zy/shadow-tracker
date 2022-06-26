@@ -1,4 +1,5 @@
 import { getSessionMap, getUserMap, mapToArray } from './util/common';
+import { handleCustomLogByKeys } from './util/custom';
 import { handleDeviceInfo } from './util/device';
 import { handleOverviewInfo } from './util/overview';
 import { handlePerformanceInfo } from './util/performance';
@@ -18,6 +19,7 @@ export interface Log {
   logTime: number;
   url: string;
   logType: string;
+  logKey: string;
   logContent: any;
   logSession: string;
   logUser: string;
@@ -92,5 +94,9 @@ export class ShadowTrackerAnalyzer {
 
   getPerformanceInfo() {
     return handlePerformanceInfo(this.sessionMap);
+  }
+
+  getCustomLogByKeys(keys: string[]) {
+    return handleCustomLogByKeys(this.sessionMap, keys);
   }
 }

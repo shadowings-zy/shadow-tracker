@@ -5,7 +5,7 @@
  * 使用user-agent获取用户设备信息
  */
 
-import { LOG_TYPE, TrackerLog } from '../core/log';
+import { LOG_KEY, LOG_TYPE, TrackerLog } from '../core/log';
 import { ITrackerOptions } from '../core/tracker';
 
 export function captureDeviceInfo(trackerOptions: ITrackerOptions): TrackerLog | undefined {
@@ -14,6 +14,7 @@ export function captureDeviceInfo(trackerOptions: ITrackerOptions): TrackerLog |
     const deviceLog = new TrackerLog(
       trackerOptions,
       LOG_TYPE.DEVICE,
+      LOG_KEY.DEVICE,
       deviceData,
       trackerOptions.customizeDeviceLog(navigator.userAgent)
     );

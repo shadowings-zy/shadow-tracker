@@ -1,6 +1,6 @@
 {
   "name": "shadow-tracker-analyzer",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Analyzer for logs captured by shadow-tracker",
   "repository": "shadowings-zy/shadow-tracker",
   "license": "MIT",

@@ -3,7 +3,7 @@
  * @author shadowingszy
  */
 
-import { LOG_TYPE, TrackerLog } from '../core/log';
+import { LOG_KEY, LOG_TYPE, TrackerLog } from '../core/log';
 import { Tracker } from '../core/tracker';
 
 export function captureJsError(tracker: Tracker) {
@@ -39,6 +39,7 @@ function overWriteConsoleError(tracker: Tracker) {
         const errorLog = new TrackerLog(
           tracker.trackerOptions,
           LOG_TYPE.ERROR,
+          LOG_KEY.ERROR,
           errorLogContent,
           tracker.trackerOptions.customizeErrorLog(error)
         );
@@ -53,6 +54,7 @@ function overWriteConsoleError(tracker: Tracker) {
         const errorLog = new TrackerLog(
           tracker.trackerOptions,
           LOG_TYPE.ERROR,
+          LOG_KEY.ERROR,
           errorLogContent,
           tracker.trackerOptions.customizeErrorLog(error)
         );
@@ -85,6 +87,7 @@ function handleOnErrorEvent(tracker: Tracker) {
       const errorLog = new TrackerLog(
         tracker.trackerOptions,
         LOG_TYPE.ERROR,
+        LOG_KEY.ERROR,
         errorLogContent,
         tracker.trackerOptions.customizeErrorLog(errorMessage)
       );
@@ -123,6 +126,7 @@ function handleRejectionEvent(tracker: Tracker) {
       const errorLog = new TrackerLog(
         tracker.trackerOptions,
         LOG_TYPE.ERROR,
+        LOG_KEY.ERROR,
         errorLogContent,
         tracker.trackerOptions.customizeErrorLog(error)
       );

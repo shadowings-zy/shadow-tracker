@@ -8,7 +8,7 @@ import { capturePerformance } from '../handler/performance';
 import { captureEvent } from '../handler/event';
 import { captureJsError } from '../handler/jsError';
 import { generateTimeTravelCode } from '../handler/timeTravel';
-import { TrackerLog } from './log';
+import { LOG_TYPE, TrackerLog } from './log';
 import { captureFetch, captureXMLHttpRequest } from '../handler/request';
 
 export interface ITrackerOptions {
@@ -127,6 +127,12 @@ export class Tracker {
 
   addLog(log: TrackerLog) {
     this.logList.push(log);
+  }
+
+  addCustomLog(key: string, content: any) {
+    const customLog = new TrackerLog(this.trackerOptions, LOG_TYPE.CUSTOM, key, content);
+    this.addLog(customLog);
+    console.debug('add custom log:\n', customLog);
   }
 
   setLogList(logList: TrackerLog[]) {

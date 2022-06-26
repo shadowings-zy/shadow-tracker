@@ -4,7 +4,7 @@
  * @author shadowingszy
  */
 
-import { LOG_TYPE, TrackerLog } from '../core/log';
+import { LOG_KEY, LOG_TYPE, TrackerLog } from '../core/log';
 import { Tracker } from '../core/tracker';
 
 const oldXMLHttpRequestOpen = window.XMLHttpRequest.prototype.open;
@@ -30,6 +30,7 @@ export function captureXMLHttpRequest(tracker: Tracker) {
         const xmlHttpRequestLog = new TrackerLog(
           tracker.trackerOptions,
           LOG_TYPE.REQUEST,
+          LOG_KEY.REQUEST,
           loadEndLog,
           tracker.trackerOptions.customizeXMLHttpRequestLog(event)
         );
@@ -70,6 +71,7 @@ export function captureFetch(tracker: Tracker) {
             const fetchLog = new TrackerLog(
               tracker.trackerOptions,
               LOG_TYPE.REQUEST,
+              LOG_KEY.REQUEST,
               loadEndLog,
               tracker.trackerOptions.customizeXMLHttpRequestLog(response)
             );
@@ -86,7 +88,12 @@ export function captureFetch(tracker: Tracker) {
           event: 'fetchReject',
           duration: requestFinishTime - requestStartTime
         };
-        const fetchLog = new TrackerLog(tracker.trackerOptions, LOG_TYPE.REQUEST, loadEndLog);
+        const fetchLog = new TrackerLog(
+          tracker.trackerOptions,
+          LOG_TYPE.REQUEST,
+          LOG_KEY.REQUEST,
+          loadEndLog
+        );
         tracker.addLog(fetchLog);
 
         console.debug('capture fetch log:\n', fetchLog);

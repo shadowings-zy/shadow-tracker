@@ -99,6 +99,16 @@ Use example:
 console.log(tracker.getTimeTravelCode());
 ```
 
+### addCustomLog(key, value)
+
+add custom log，the `logType` of log object is `Custom Log`
+
+使用样例：
+
+```javascript
+tracker.addCustomLog(key, value);
+```
+
 ## Options
 
 When initialize tracker, a configuration object can be passed in to enrich the functionality of the tracker.
@@ -126,7 +136,7 @@ const option = {
 };
 ```
 
-## Loglist description and custom log
+## Loglist description and custom log object
 
 Loglist is a JS array for storing all logs. We can use `getloglist()` to get this array, and further develop the logic of log reporting and log storage according to our business needs.
 In addition, we can expand the log object according to our own business requirements.
@@ -135,7 +145,7 @@ If we need to add custom data, first we need to assign the `custom` attribute in
 
 ### Log object description
 
-#### Basic description
+#### Introduction
 
 The log object is the basic log object, which contains the following properties:
 
@@ -145,12 +155,12 @@ The log object is the basic log object, which contains the following properties:
   "url": "www.shadowingszy.top", // the URL that generates the log page
   "logSession": "xxx", // sessionId
   "logUser": "xxx", // userId
-  "logType": "Error Log", // the types of logs, including: event log | error log | XMLHttpRequest log | device log | performance log
+  "logType": "Error Log", // the types of logs, including: event log | error log | XMLHttpRequest log | device log | performance log | Custom Log
   "logContent": {} // specific log information
 }
 ```
 
-#### Custom description
+#### Custom log object
 
 The custom log object contains the following properties:
 
@@ -160,7 +170,7 @@ The custom log object contains the following properties:
   "url": "www.shadowingszy.top", // the URL that generates the log page
   "logSession": "xxx", // sessionId
   "logUser": "xxx", // userId
-  "logtype": "error log", // the types of logs, including: event log | error log | XMLHttpRequest log | device log | performance log
+  "logtype": "error log", // the types of logs, including: event log | error log | XMLHttpRequest log | device log | performance log | Custom Log
   "logcontent": {} // specific log information
   "custom": {// custom log fields
     "log": {}, // the value returned after executing the customizelog() method in the configuration item
@@ -174,12 +184,12 @@ By implementing the 'customizelog' method in the configuration item, we can cust
 `Customizelog`method parameter description:
 |parameter name | parameter type | parameter description|
 | - | - | - |
-|logType | string | the type of log, including:`Event log | Error log | XMLHttpRequest log | Device log | Performance log`
+|logType | string | the type of log, including:`Event log | Error log | XMLHttpRequest log | Device log | Performance log | Custom Log`
 |logContent | object | log specific information|
 
-### Description of event log object
+### Event log object
 
-#### Basic description
+#### Introduction
 
 The event log object is a log object that records click event, keyboard input event and url change event. It will be displayed in the `logContent` property of the corresponding type of log object.
 Event log includes two types of log: "click" and "input", respectively including the following attributes:
@@ -225,9 +235,9 @@ By implementing the `customizeEventLog()` method in the configuration item, we c
 | - | - | - |
 |event | object | the event object that currently triggers the event
 
-### Error log object description
+### Error log object
 
-#### Basic description
+#### Introduction
 
 Error log object is a log object that records JS errors on the current page. It will be displayed in the `logContent` property of the corresponding type of log object.
 The error log object contains the following properties:
@@ -256,9 +266,9 @@ By implementing the `customizeErrorLog()` method in the configuration item, we c
 | - | - | - |
 |error | object | the error object that triggered the error
 
-### XMLHttpRequest log object description
+### XMLHttpRequest log object
 
-#### Basic description
+#### Introduction
 
 XMLHttpRequest log object is a log object that records XMLHttpRequest. It will be displayed in the `logContent` attribute of the corresponding type of log object.
 It can also capture log of `fetch API`
@@ -279,9 +289,9 @@ Log content:
 
 This kind of log not support customize.
 
-### Device log object description
+### Device log object
 
-#### Basic description
+#### Introduction
 
 The device log object is a log object that records user device information. It will be displayed in the `logContent` property of the corresponding type of log object, including the following properties:
 
@@ -309,7 +319,7 @@ By implementing the `customizeDeviceLog()` method in the configuration item, we 
 | - | - | - |
 |device | object | `navigator.useragent` object
 
-### Description of performance log object
+### performance log object
 
 #### Basic instructions
 
@@ -473,7 +483,7 @@ return value：
 
 get performance information
 
-返回值：
+return value：
 
 ```javascript
 {
@@ -487,5 +497,37 @@ get performance information
   requestTime: 17151, // time when content loading is completed
   timeToFirstByte: 63315, // the time taken to read the first byte of the page, that is, the time taken by the user to get your resources
   unloadTime: 0 // time to unload the page
+}
+```
+
+#### getCustomLogByKeys(keys)
+
+get all custom log by keys
+
+return value：
+
+```javascript
+{
+  "key1": [
+    {
+      "logTime": 1584262658187,
+      "url": "xxx",
+      "logSession": "xxx",
+      "logUser": "xxx",
+      "logKey": "key1",
+      "logType": "Custom Log",
+      "logContent": {}
+    },
+    {
+      "logTime": 1584262658187,
+      "url": "xxx",
+      "logSession": "xxx",
+      "logUser": "xxx",
+      "logKey": "key1",
+      "logType": "Custom Log",
+      "logContent": {}
+    }
+  ],
+  "key2": []
 }
 ```
